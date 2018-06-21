@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "品牌件",
+  "onReachBottomDistance": 100,
+  "usingComponents": {
+    "part-list": "plugin://myPlugin/part-list",
+    "camera-plugin": "plugin://myPlugin/camera-plugin"
+  }
+}

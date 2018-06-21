@@ -1,0 +1,37 @@
+ <camera flash="auto" style="width:{{!enableCropper?'200rpx':'750rpx'}};height:{{!enableCropper?'760rpx':'80%'}};position:fixed;top:{{!enableCropper?'114rpx':'0'}};left:{{!enableCropper?'282rpx':'0'}}">
+  <!-- 罩层样式   -->
+   <cover-view wx:if="{{enableCropper}}" class="out-mask">
+    <cover-view class="mask mask-left"></cover-view>
+    <cover-view class="mask-center">
+      <cover-view class="mask mask-center-top"></cover-view>
+      <cover-view class="photo_area">
+        <cover-image src="http://assets.aleqipei.com/wxapp/images/photo@2x.png"></cover-image>
+      </cover-view>
+      <cover-view class="mask mask-center-bottom"></cover-view>
+    </cover-view>
+    <cover-view class="mask mask-right"></cover-view>
+  </cover-view> 
+  <!-- 全屏相机下的文字提示   -->
+   <cover-view class="text" wx:if="{{enableCropper}}">
+    <cover-image src="http://assets.aleqipei.com/wxapp/images/text@2x.png"></cover-image>
+  </cover-view> 
+</camera>
+
+<!-- iphone低版本提示文字  -->
+ <block wx:if="{{!enableCropper}}">　 
+  <view class="ip_text">
+    <view>对准前挡风玻璃、汽车名牌或行驶证上面的车架号</view>
+  </view>
+</block>
+
+<!-- 底部btn区域   -->
+ <view class="{{enableCropper?'btn_area':'btn_area gray_bg'}}">
+  <view class="{{enableTakePhoto?'btn_camera enable_bg':'btn_camera disabled_bg'}}" bindtap="takePhotoes"></view>
+  <view class="btn_album" catchtap="openAlbum">
+    <image src="http://assets.aleqipei.com/wxapp/images/album_white.png"></image>
+    <view>相册</view>
+  </view>
+</view>  
+
+<canvas canvas-id='myCanvas'></canvas> 
+

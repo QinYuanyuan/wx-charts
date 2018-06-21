@@ -1,0 +1,1 @@
+<camera-plugin bind:goBackFn="goBackFn"/>

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "识别车型",
+  "usingComponents": {
+    "camera-plugin": "plugin://myPlugin/camera-plugin"
+  }
+}

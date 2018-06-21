@@ -1,0 +1,16 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/part-list/part-list",
+    "pages/part-detail/part-detail",
+    "pages/part-select-model/part-select-model",
+    "pages/camera/camera",
+    "pages/identification/identification"
+  ],
+  "plugins": {
+    "myPlugin": {
+      "version": "dev",
+      "provider": "wx60090841b63b6250"
+    }
+  }
+}

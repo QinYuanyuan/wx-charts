@@ -1,0 +1,56 @@
+
+<view class="btn-container" bindtap='showCameraFn' wx:if="{{!showCamera}}">
+  <view>点击识别车架号</view>
+</view>
+
+<view class="result-contailer" wx:if="{{showResult}}">
+  <view class="result-title">识别结果</view>
+  <view class="no-result" wx:if="{{noResult}}">识别失败，请重新进行识别。</view>
+
+  <view class="result-vin" wx:if="{{!noResult}}">VIN: {{vinResult.result.meta.vin ? vinResult.result.meta.vin : ''}}</view>
+  <view class="result-model" wx:if="{{!noResult}}">
+    <view class="model-item">
+        <view class="detail-name">品牌</view>
+        <view class="detail-des">{{ modelInfo.brand_name ? modelInfo.brand_name : '' }}</view>
+      </view>
+      <view class="model-item">
+        <view class="detail-name">厂商</view>
+        <view class="detail-des">{{ modelInfo.manu_name ? modelInfo.manu_name : '' }}</view>
+      </view>
+      <view class="model-item">
+        <view class="detail-name">车系</view>
+        <view class="detail-des">{{ modelInfo.family_name ? modelInfo.family_name : '' }}</view>
+      </view>
+      <view class="model-item">
+        <view class="detail-name">年款</view>
+        <view class="detail-des">{{ modelInfo.year_pattern ? modelInfo.year_pattern : '' }}</view>
+      </view>
+      <view class="model-item">
+        <view class="detail-name">排量</view>
+        <view class="detail-des">{{ modelInfo.displacement ? modelInfo.displacement : '' }}</view>
+      </view>
+      <view class="model-item">
+        <view class="detail-name">进气形式</view>
+        <view class="detail-des">{{ modelInfo.aspirated_way ? modelInfo.aspirated_way : '' }}</view>
+      </view>
+      <view class="model-item">
+        <view class="dvetail-name">发动机型号</view>
+        <view class="detail-des">{{ modelInfo.engine_model ? modelInfo.engine_model : '' }}</view>
+      </view>
+      <view class="model-item">
+        <view class="detail-name">底盘号</view>
+        <view class="detail-des">{{ modelInfo.chassis_num ? modelInfo.chassis_num : '' }}</view>
+      </view>
+      <view class="model-item">
+        <view class="detail-name">变速箱类型</view>
+        <view class="detail-des">{{ modelInfo.gearbox_type ? modelInfo.gearbox_type : '' }}</view>
+      </view>
+      <view class="model-item">
+        <view class="detail-name">档位数</view>
+        <view class="detail-des">{{ modelInfo.gears_num ? modelInfo.gears_num : '' }}</view>
+      </view>
+  </view>
+</view>
+
+
+<camera-plugin wx:if="{{showCamera}}" vin-result="{{vinResult}}" bind:goBackFn="goBackFn"/>

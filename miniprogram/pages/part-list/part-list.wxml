@@ -1,0 +1,16 @@
+<part-list 
+  wx:if="{{pageStatus === 'partList'}}"
+  
+  model-id="{{modelId}}"
+  model-info="{{modelInfo}}"
+  selectModelState="{{selectModelState}}"
+  showModal="{{showModal}}"
+  pageState="{{pageState}}"
+  noModelInfo="{{noModelInfo}}"
+  noSeriesId="{{noSeriesId}}"
+
+  bind:toDetailFn="toDetailFn"
+  bind:toSelectModelFn="toSelectModelFn"
+  bind:toCameraFn="toCameraFn"
+
+/>

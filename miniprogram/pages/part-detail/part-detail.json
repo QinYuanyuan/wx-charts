@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "配件详情",
+  "usingComponents": {
+    "part-detail": "plugin://myPlugin/part-detail"
+  }
+}

@@ -1,0 +1,65 @@
+<!--搜索框  -->
+<block wx:if="{{!search.status}}">
+  <view class="{{pageSearchType === 'home' ? 'search home-search' : 'search part-search'}}">
+    <view class="search__scan" bindtap='toCameraFn'>
+      <image src="http://assets.aleqipei.com/wxapp/images/home/vin.png"></image>
+    </view>
+    <view class="search__input" bindtap="searchFn">
+      <view class="search__input__placeholder" wx:if="{{ !search.status }}" bindtap="focusSearch">
+        <text>{{ search.query ? search.query : '车架号/车系/配件品类/配件编码' }}</text>
+        <image src="http://assets.aleqipei.com/wxapp/images/home/search__clear.png" bindtap="clearSearch" wx:if="{{ search.query }}"></image>
+      </view>
+    </view>
+  </view>
+</block>
+<!-- 搜索 -->
+<block wx:else>
+  <view class="search-container">
+    <view class="search-box">
+      <!-- <navigator class="search__scan" hover-class="none" url="/pages/camera/camera">
+        <image src="http://assets.aleqipei.com/wxapp/images/home/vin.png"></image>
+      </navigator> -->
+      <view class="search__scan" bindtap='toCameraFn'>
+        <image src="http://assets.aleqipei.com/wxapp/images/home/vin.png"></image>
+      </view>
+      <view class="search__input">
+        <view class="search__input__val">
+          <input type="text" value="{{ search.inputQuery }}" focus="{{ focus }}" bindinput="setSearch" bindconfirm="execSearch" />
+          <image src="http://assets.aleqipei.com/wxapp/images/home/search__clear.png" bindtap="clearSearch" wx:if="{{ search.query }}"></image>
+        </view>
+      </view>
+      <view class="cancle-box" bindtap="blurSearch">
+        <view>取消</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="result-tab">
+    <view class="{{tabState === '' ? 'active' : ''}}" data-tab-type="" bindtap='tabChangeFn'>全部</view>
+    <view class="{{tabState === 'car_series' ? 'active' : ''}}" data-tab-type="car_series" bindtap='tabChangeFn'>车系</view>
+    <!-- <view class="{{tabState === 'part_brand' ? 'active' : ''}}" data-tab-type="part_brand" bindtap='tabChangeFn'>配件品牌</view> -->
+    <view class="{{tabState === 'part_category_virtual' ? 'active' : ''}}" data-tab-type="part_category_virtual" bindtap='tabChangeFn'>配件品类</view>
+    <view class="{{tabState === 'part' ? 'active' : ''}}" data-tab-type="part" bindtap='tabChangeFn'>配件编码</view>
+  </view>
+
+  <view class="result-container">
+    <view class="one-result" wx:for="{{showResultList}}" wx:for-item="item" wx:for-index="index" catchtap="checkSearch" data-index="{{index}}">
+      <view class="result-content">{{item.content}}</view>
+      <view class="result-type" wx:if="{{item.item_type === 'car_series' && tabState === ''}}">车系</view>
+      <view class="result-type" wx:if="{{item.item_type === 'part' && tabState === ''}}">编码</view>
+      <view class="result-type" wx:if="{{item.item_type === 'part_category_virtual' && tabState === ''}}">品类</view>
+      <!-- <view class="result-type" wx:if="{{item.item_type === 'part_brand' && tabState === ''}}">品牌</view> -->
+    </view>
+    <view class="no-result" wx:if="{{showTip}}">
+      <image wx:if="{{showTip}}" src='http://assets.aleqipei.com/wxapp/images/home/tip.png'></image>
+      <view wx:if="{{!tabState && showTip}}">未搜索到任何结果</view>
+      <view wx:if="{{tabState}}">
+        <text wx:if="{{search.query}}">未搜索到{{search.query ? '与' + search.query : ''}}相关的</text>
+        <text wx:if="{{tabState === 'car_series' && showTip}}">车系</text>
+        <!-- <text wx:if="{{tabState === 'part_brand' && showTip}}">配件品牌</text> -->
+        <text wx:if="{{tabState === 'part_category_virtual' && showTip}}">配件品类</text>
+        <text wx:if="{{tabState === 'part' && showTip}}">配件编码</text>
+      </view>
+    </view>
+  </view>
+</block>

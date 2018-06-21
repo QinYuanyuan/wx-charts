@@ -1,0 +1,5 @@
+<part-select-model 
+  id="test"
+  model-info="{{modelInfo}}"
+  bind:goBackFn="goBackFn"
+/>

@@ -1,0 +1,128 @@
+<view class="search-conteiner">
+  <image src='http://assets.aleqipei.com/wxapp/images/home/vin.png' bindtap='toCameraFn'></image>
+  <input placeholder='输入17位车架号或搜索车系' bindinput='searchInputFn' bindconfirm='searchConfirmFn' value="{{inputValue}}"></input>
+</view>
+<!--车系搜索结果的展示  -->
+<block wx:if="{{showSeriesResult}}">
+  <view wx:if="{{!noSearchResult}}">
+    <scroll-view class="" scroll-y="true" style='height: 1050rpx;padding-bottom:100rpx;'>
+      <view class="series-result" wx:for="{{seriesResult}}" wx:for:item="item" wx:for-index="index" data-series_id="{{item.item_id}}" data-name="{{item.content}}" bindtap='selectSearchSeriesFn'>{{item.content}}</view>
+      <view class="no-more" wx-if="{{noMoreResult}}">- 没有更多结果了 -</view>
+    </scroll-view>
+  </view>
+
+  <view class="no-result" wx:else>
+    <image src='http://assets.aleqipei.com/wxapp/images/no_series.png'></image>
+    <view>未找到您搜索的车系，建议您先选择品牌哦。</view>
+  </view>
+</block>
+
+<view class="container">
+  <!--选择品牌  -->
+  <block wx:if="{{!showSeriesResult}}">
+    <block wx:if="{{pageState === 'brand'}}">
+      <scroll-view scroll-y="true" scroll-into-view="{{alpha}}" style="height: {{scrollHeight - 45}}px;">
+        <view class="alpha__item" wx:if="{{hot_list.length}}">
+          <view class="alpha__item__hd">热门品牌</view>
+          <view class="hot__list">
+            <block wx:for="{{hot_list}}">
+              <view class="hot__list__item" bindtap="getSeriesFn" data-brand_id="{{item.id}}" data-brand_name="{{item.brand_name}}">
+                <image src="{{item.logo_url}}"></image>
+                <text>{{item.brand_name}}</text>
+              </view>
+            </block>
+          </view>
+        </view>
+        <view wx:for="{{alphabet_list}}" wx:for-item="alpha" id="{{alpha}}" class="alpha__item">
+          <view class="alpha__item__hd">{{alpha}}</view>
+          <view class="hot__list">
+            <block wx:for="{{list[alpha]}}">
+              <view class="hot__list__item" bindtap="getSeriesFn" data-brand_id="{{item.id}}" data-brand_name="{{item.brand_name}}">
+                <image src="{{item.logo_url}}" mode="aspectFit"></image>
+                <text>{{item.brand_name}}</text>
+              </view>
+            </block>
+          </view>
+        </view>
+      </scroll-view>
+      <view class="alpha__selection__container">
+        <view class="alpha__selection" wx:for="{{alphabet_ary}}" wx:for-item="item" wx:for-index="index" data-ap="{{item}}" bindtap="handlerAlphaTap">
+          <view>
+            <view wx:for="{{item}}" wx:for-item="childItem">{{childItem}}</view>
+          </view>
+        </view>
+      </view>
+    </block>
+
+    <!--选择车系  -->
+    <block wx:if="{{pageState === 'series'}}">
+      <view class="info">
+        <view class="info__title">已选信息</view>
+        <view class="info__content">
+          <view class="info__content__item" bindtap="deleteBrand">
+            <view class="info__content__item__detail">{{vehicle.brand_name}}</view>
+            <image class="icon--cross" src="http://assets.aleqipei.com/wxapp/images/icon-cross.png" mode="aspectFit"></image>
+          </view>
+          <view class="info__content__item" wx:if="{{vehicle.series_id}}" bindtap="deleteSeries">
+            <view class="info__content__item__detail">{{vehicle.series_name && vehicle.series_id ? vehicle.series_name : ''}}</view>
+            <image class="icon--cross" src="http://assets.aleqipei.com/wxapp/images/icon-cross.png" mode="aspectFit"></image>
+          </view>
+        </view>
+      </view>
+
+      <block wx:if="{{!selectModel}}">
+        <view class="select-series">选择车系</view>
+        <scroll-view scroll-y="true" style="height: 800rpx;padding-bottom:100rpx;" class="selection">
+          <block wx:for="{{seriesList}}">
+            <view class="selection__title">{{item.sub_brand_name}}</view>
+            <view class="selection__content">
+              <block wx:for="{{item.series}}" wx:for-item="seriesItem">
+                <view bindtap="selectSeries" data-sub_brand_name="{{item.sub_brand_name}}" data-series_id="{{seriesItem.series_id}}" data-series_name="{{seriesItem.series_name}}" class="selection__content__item">{{seriesItem.series_name}}</view>
+              </block>
+            </view>
+          </block>
+        </scroll-view>
+      </block>
+
+      <block wx:else>
+        <view class="select-container">
+          <!--选择年款和排量tab  -->
+          <view class="select-container__title">
+            <view data-title="year" class="{{selectYearFlag ? 'select-year active' : 'select-year'}}" bindtap='selectYearFn'>
+              <text>{{selectYear}}</text>
+              <view class="arrow" animation="{{animationYearData}}"></view>
+            </view>
+            <view data-title="displacement" class="{{selectDispFlag ? 'select-displacement active' : 'select-displacement'}}" bindtap='selectDispFn'>
+              <text>{{selectDisplacement}}</text>
+              <view class="arrow" animation="{{animationDispData}}"></view>
+            </view>
+          </view>
+          <!--年款和排量container  -->
+          <block wx:if="{{showYearModal}}">
+            <view class="select-container__bg" data-title='bg' bindtap='closeYearAndDispModelFn'></view>
+            <view class="select-container__item">
+              <view wx:for="{{yearList}}" wx:for-item="item" wx:for-index="index" data-year_id="{{item.id}}" data-year="{{item.year}}" class="year" bindtap='selectOneYear'>{{item.year}}</view>
+            </view>
+          </block>
+
+          <block wx:if="{{showDispModal}}">
+            <view class="select-container__bg" data-title='bg' bindtap='closeYearAndDispModelFn'></view>
+            <view class="select-container__item">
+              <view wx:for="{{displacementList}}" wx:for-item="item" wx:for-index="index" data-displacement_id="{{item.id}}" data-displacement="{{item.displacement}}" class="year" bindtap='selectOneDisp'>{{item.displacement}}</view>
+            </view>
+          </block>
+          <!--查看全部  -->
+          <view class="select-container_all" bindtap='getPartBySeriesFn'>
+            <view>查询全部</view>
+            <view class='arrow'></view>
+          </view>
+          <!--详细车型  -->
+          <view class="select-container__model">
+            <view class="select-container__model__detail" wx:for="{{modelList}}" wx:for-item="item" wx:for-index="index" data-model_id='{{item.id}}' data-model_year="{{item.model_year}}" data-displacement="{{item.displacement}}" data-aspirated_way="{{item.aspirated_way}}"
+              data-gears_num="{{item.gears_num}}" data-trans_type="{{item.trans_type}}" data-engine_code="{{item.engine_code}}" data-structure="{{item.structure}}" bindtap='selectOneModelFn'>{{item.year_pattern || item.model_year}}款 {{item.displacement}}T {{item.aspirated_way}} {{item.gears_num}}档 {{item.trans_type}} {{item.engine_code}} {{item.structure}}</view>
+          </view>
+        </view>
+      </block>
+    </block>
+  </block>
+</view>

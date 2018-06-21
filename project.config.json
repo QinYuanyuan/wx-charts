@@ -1,0 +1,61 @@
+{
+	"miniprogramRoot": "./miniprogram",
+	"pluginRoot": "./plugin",
+	"compileType": "plugin",
+	"setting": {
+		"urlCheck": true,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true
+	},
+	"appid": "wx60090841b63b6250",
+	"projectname": "charts",
+	"libVersion": "2.0.9",
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": 1,
+			"list": [
+				{
+					"id": 0,
+					"name": "camera",
+					"pathName": "pages/camera/camera",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "part-list",
+					"pathName": "pages/part-list/part-list",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "part-detail",
+					"pathName": "pages/part-detail/part-detail",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "part-select-model",
+					"pathName": "pages/part-select-model/part-select-model",
+					"query": ""
+				}
+			]
+		},
+		"game": {
+			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": []
+		}
+	}
+}

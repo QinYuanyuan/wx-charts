@@ -1,0 +1,4 @@
+<part-detail 
+  psn="{{psn}}"
+  category_id="{{category_id}}"
+/>

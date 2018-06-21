@@ -1,0 +1,240 @@
+
+<view class="component_bg">
+  <component-search 
+    pageSearchType="part"
+    search="{{search}}" 
+    showTip="{{showTip}}"
+    searchFlag="{{searchFlag}}"
+    showResultList="{{showResultList}}"
+    bind:toDetailFn="toDetailFn"
+    bind:initSearch="initSearch"
+    bind:getSearchPartList="getSearchPartList"
+    bind:toCameraFn="toCameraFn"
+  ></component-search>
+</view>
+
+<view style="height: 100%; {{popType !== '' || isShowBg || showImportAttr ? 'overflow:hidden' : ''}}"  wx:if="{{!search.status}}">
+
+  <!--筛选部分  -->
+  <view class="filter-container">
+    <!--车型  -->
+    <view class="filter-item">
+      <view class="img-outer-outer" bindtap="selectModelFn">
+        <view class="img-outer">
+          <image wx:if="{{selectModelState === 0}}" src="http://assets.aleqipei.com/wxapp/images/car-normal.png"></image>
+          <image wx:else src="http://assets.aleqipei.com/wxapp/images/car-high-light.png"></image>
+        </view>
+      </view>
+      <view wx:if="{{selectModelState === 0}}">车型</view>
+      <view wx:if="{{selectModelState === 1}}" class="{{isOpenInfo ? 'all-model-info' : 'model-info'}}" bindtap='openInfoFn'>
+        <block wx:if="{{!noModelInfo}}">
+          {{modelInfo.manu_name ? modelInfo.manu_name : ''}} {{modelInfo.family_name ? modelInfo.family_name : ''}} {{modelInfo.year_pattern ? modelInfo.year_pattern + '款': ''}} {{modelInfo.displacement ? modelInfo.displacement : ''}} {{modelInfo.aspirated_way
+          ? modelInfo.aspirated_way : ''}} {{modelInfo.gears_num ? modelInfo.gears_num + '档' : ''}} {{modelInfo.trans_type ? modelInfo.trans_type : ''}} {{modelInfo.engine_code ? modelInfo.engine_code : ''}} {{modelInfo.structure ? modelInfo.structure : ''}}
+          {{modelInfo.sales_version ? modelInfo.sales_version : ''}}
+        </block>
+        <block wx:else>
+          {{modelInfo.brand_name ? modelInfo.brand_name : ''}} {{modelInfo.manu_name || modelInfo.sub_brand_name}} {{modelInfo.family_name || modelInfo.series_name}}
+        </block>
+      </view>
+      <view wx:else>
+        <view catchtap='hideSelectBox' wx:if="{{ noSeriesId }}">
+          <text style="color: #d7000f;font-size: 20rpx;">请手动选择车型查看适配</text>
+        </view>
+      </view>
+      <view class="border"></view>
+    </view>
+    <!--品类  -->
+    <view class="filter-item">
+      <view class="img-outer-outer" data-type="cats" catchtap='showParamPop'>
+      <view class='img-outer'>
+        <image wx:if="{{popType === 'cats' || categoryName}}" src="http://assets.aleqipei.com/wxapp/images/category-high-light.png"></image>
+        <image wx:else src="http://assets.aleqipei.com/wxapp/images/category-normal.png"></image>
+      </view>
+      </view>
+      <view class='{{ popType === "cats" || categoryName? "active" : "" }}'>{{categoryName ? categoryName : '品类'}}</view>
+      <view class="border"></view>
+    </view>
+    <!--品牌  -->
+    <!-- <view class="filter-item">
+    <view class="img-outer-outer" data-type="brand" catchtap='showParamPop'>
+      <view class='img-outer'>
+        <image wx:if='{{popType === "brand" || brandName}}' src="http://assets.aleqipei.com/wxapp/images/brand-high-light.png"></image>
+        <image wx:else src="http://assets.aleqipei.com/wxapp/images/brand-normal.png"></image>
+      </view>
+      </view>
+      <view class='{{ popType === "brand" || brandName ? "active" : "" }}'>{{brandName ? brandName : '品牌'}}</view>
+    </view> -->
+  </view>
+  <!--品类下的重要参数  -->
+  <view class="important-params-container" hidden='{{ categoryId === "" || ( propertyList.length === 0 && selectProperty.length === 0) }}'>
+    <view class="important-params">
+      <block wx:for="{{importAttr}}" wx:for-item="item" wx:for-index="index">
+        <view data-property_id='{{item.property_id}}' data-property_name='{{item.property_name}}' data-index='{{index}}' catchtap='selectImportPropertyType' class="{{item.selected ? 'active important-item' : 'important-item'}} {{categoryId == '7' ? 'other-style' : ''}}">{{item.property_name}}<view class="{{activeIcon === index ? 'icon icon-active' : 'icon'}}"></view></view>
+        
+      </block>
+    </view>
+    <view class="{{moreStyle ? 'more-params' : ''}}" catchtap='showParamPop' data-type="property" wx:if="{{showScreening}}">
+      <text>更多</text>
+      <view class="right-arrow"></view>
+    </view>
+    <view class="up-arrow"></view>
+    <!--重要属性下的所有参数的值  -->
+    <view class="property-container" wx:if="{{showImportAttr}}">
+      <scroll-view scroll-y="true" style="max-height:860rpx">
+        <view wx:for="{{importAttr[importAttrIndex].values}}" wx:for-item="item" wx:for-index="index" data-index="{{index}}" data-property_value_id='{{item.property_value_id}}' data-property_value='{{item.property_value}}' data-selected="{{item.selected ? true : false}}"
+          class="{{item.selected ? 'active' : ''}}" bindtap='selectImportParams'>{{item.property_value}}</view>
+      </scroll-view>
+    </view>
+  </view>
+  <view class="bg-gray" wx:if="{{!showImportAttr}}"></view>
+
+  <view class='bg-black' wx:if="{{showImportAttr}}" bindtap='closeImportFn'></view>
+
+
+  <select-model-component wx:if="{{showSelectModel}}" show-select-model="{{showSelectModel}}" search-focus="{{searchFocus}}" searh-text="{{searchText}}" show-modal="{{showModal}}" vehicle="{{vehicle}}" select-model-state="{{selectModelState}}"
+    animation="{{animationData}}" model-info="{{modelInfo}}" page-state="{{pageState}}" no-model-info="{{noModelInfo}}" select-model-series="{{selectModelSeries}}" bind:getPartList="getPartList" bind:selectModelInit="selectModelInit" bind:deleteSelectModelFn="deleteSelectModelFn"></select-model-component>
+
+  <!--配件品类筛选框  -->
+  <view class='brand-content' hidden="{{ popType !== conditions[0].popType }}">
+    <view class='alpha__item__bd'>
+      <view class='all-category alpha__item__brand {{ categoryId === "" ? "active" : "" }}' catchtap='selectAllFn'>
+        <text>全部</text>
+        <view></view>
+      </view>
+    </view>
+    <scroll-view scroll-y="true" style="height: 1080rpx;">
+      <view class="left-item" data-index="{{ index }}" wx:for="{{ categoryList }}" wx:for-item="category" wx:for-index="categoryIdx">
+        <view class='left-item_name'>{{ category.name }}</view>
+        <!--滤清器下面的全部按钮  -->
+        <view wx-if="{{category.id === '7487' }}" data-index="{{index}}" data-category-idx="{{ allFilterId }}" data-type="filter" class="right-item {{allFilterSelected ? 'current' : ''}}" catchtap='setCategoryChild'>
+          <text>全部</text>
+          <view></view>
+        </view>
+        <!--制动系统下的全部按钮  -->
+        <view wx-if="{{ category.id === '7492'}}" data-index="{{index}}" data-category-idx="{{ allBrakeId }}" data-type="brake" class="right-item {{allBrakeSelected ? 'current' : ''}}" catchtap='setCategoryChild'>
+          <text>全部</text>
+          <view></view>
+        </view>
+        <view wx:for="{{ category.children }}" wx:for-item="child" wx:for-index="index" data-category-idx="{{ categoryIdx}}" data-index="{{ index}}" class="right-item {{ child.selected || child.mapped_id == categoryId ? 'current' : '' }}" catchtap='setCategoryChild'>
+          <text>{{ child.name }}</text>
+          <view></view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+  <!--配件品牌筛选框  -->
+  <!-- <view class='brand-content' hidden="{{ popType !== conditions[1].popType }}">
+    <view class='alpha__item__bd'>
+      <view catchtap='selectAllBrand' class='all-brand alpha__item__brand {{ brandId === "" ? "active" : "" }}'>
+        <text>全部</text>
+        <view></view>
+      </view>
+    </view>
+    <scroll-view scroll-y="true" scroll-into-view="{{ alphaPos }}" style="height: 1080rpx;">
+      <view class='alpha__item' wx:for="{{ letterList }}" wx:for-item="alpha">
+        <view class='alpha__item_hd' id="{{ alpha }}">{{ alpha }}</view>
+        <view class='alpha__item__bd'>
+          <view class='alpha__item__brand {{ brand.brand_id === brandId ? "active" : "" }}' wx:for="{{ brandList[alpha] }}" wx:for-item="brand" catchtap='selectBrand' data-id="{{ brand.brand_id }}" data-name="{{ brand.brand_name }}">
+            <text>{{ brand.brand_name }}</text>
+            <view></view>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+    <view class="alpha__selection" hidden='{{ categoryId !== "" ? true : false}}'>
+      <view wx:for="{{letterList}}" data-ap="{{item}}" bindtap="handlerAlphaTap">{{item}}</view>
+    </view>
+  </view> -->
+  <!-- 筛选的各种参数 -->
+  <view class='import-content' hidden="{{ popType !== conditions[2].popType }}">
+    <block wx:if="{{ commonAttr.length === 0 && selectProperty.length }}">
+      <view class='import-list' wx:for="{{ selectProperty }}">
+        <view class='import-title'>
+          <text class='name'>{{ item.property_name }}</text>
+        </view>
+        <view class='import-options'>
+          <view class='active' catchtap='deleteImportProperty' data-value-id="{{ item.property_value_id }}">
+            <text>{{ item.property_value }}</text>
+            <view></view>
+          </view>
+        </view>
+      </view>
+    </block>
+    <view class='import-list' wx:for="{{ commonAttr }}" wx:for-item="property" wx:for-index="propertyIndex">
+      <view class='import-title'>
+        <text class='name'>{{ property.property_name }}</text>
+        <view class='more' catchtap='toggleProperty' data-p-index="{{ propertyIndex }}" hidden='{{ property.values.length < 13 }}'>
+          <view>更多</view>
+          <view class='arrow {{ property.showMore ? "arrow--reverse" : "" }} '></view>
+        </view>
+      </view>
+
+      <view class="prompt-message" wx:if="{{ categoryId == 33 && property.property_id == 29 && showSelectModel && !modelId}}">
+        <image src="http://assets.aleqipei.com/wxapp/images/error_red.png" class="prompt-image"></image>
+        <text class="prompt-txt">请先选择车型再筛选</text>
+      </view>
+
+      <view class='import-options' style='max-height:{{ property.showMore ? "auto":"140rpx"}};overflow-y:{{ property.showMore ? "" : "hidden"}};'>
+        <view class='{{ item.selected ? "active" : "" }}' wx:for="{{ property.values }}" data-p-index="{{ propertyIndex }}" data-index="{{ index }}" catchtap='selectImportProperty' wx:for-item="item" wx:for-index="index">
+          <text>{{ item.property_value }}</text>
+          <view></view>
+        </view>
+      </view>
+    </view>
+    <view class="btn-area">
+      <view class="reset" catchtap='resetFn'>
+        <text>重置</text>
+      </view>
+      <view class="sure" catchtap='sureFn'>
+        <text>确定</text>
+      </view>
+    </view>
+  </view>
+
+
+  <!-- 筛选参数 -->
+  <view class="parameter-container">
+    <view class="parameter-wapper ">
+      <!-- 配件列表 -->
+      <scroll-view scroll-y="true" bindscrolltolower="scrollFn" style="height: 900rpx;" class="part__list {{source === '2' ? 'part__list--pad' : ''}}">
+        <view class="part__list__item" catchtap="checkDetail" wx:for="{{ part.list }}" data-id="{{ item.goods_id }}" data-psn="{{ item.psn }}" data-category_id="{{ item.category_id }}">
+          <view class="part__list__item__title">
+            {{ item.part_name }}
+          </view>
+          <view class="part__list__item__des">
+            <view>规格型号：{{ item.part_detail.part_model }}</view>
+            <view>出厂编码：{{ item.part_detail.pmanu_code }}</view>
+          </view>
+        </view>
+        <view class="result-none" wx:if="{{ part.status.isVoid }}">
+          <image src="http://assets.aleqipei.com/wxapp/images/none.png"></image>
+          <text>未搜索到结果</text>
+        </view>
+      </scroll-view>
+    </view>
+    <view class="bg" hidden="{{ popType === '' }}" style='z-index: 13; top: 0;' catchtap='hideSelectBox'></view>
+  </view>
+</view>
+
+  <!-- <view class="parameter-container">
+    <view class="parameter-wapper ">
+      <view class="part__list {{source === '2' ? 'part__list--pad' : ''}}">
+        <view class="part__list__item" catchtap="checkDetail" wx:for="{{ part.list }}" data-id="{{ item.goods_id }}" data-psn="{{ item.psn }}" data-category_id="{{ item.category_id }}">
+          <view class="part__list__item__title">
+            {{ item.part_name }}
+          </view>
+          <view class="part__list__item__des">
+            <view>规格型号：{{ item.part_detail.part_model }}</view>
+            <view>出厂编码：{{ item.part_detail.pmanu_code }}</view>
+          </view>
+        </view>
+        <view class="result-none" wx:if="{{ part.status.isVoid }}">
+          <image src="http://assets.aleqipei.com/wxapp/images/none.png"></image>
+          <text>未搜索到结果</text>
+        </view>
+      </view>
+    </view>
+    <view class="bg" hidden="{{ popType === '' }}" style='z-index: 13; top: 0;' catchtap='hideSelectBox'></view>
+  </view>
+</view> -->
+

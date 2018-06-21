@@ -1,0 +1,154 @@
+<!-- <import src="../../src/wetoast.wxml" /> -->
+<!-- <template is="wetoast" data="{{...__wetoast__}}" /> -->
+
+<view wx:if='{{!showPartDetail}}' class="wx-container">
+  <!-- <view wx:if="{{tabState === 'baseInfo'}}" class='bg' bindtouchstart='touchStartFn' bindtouchmove='touchMoveFn'></view> -->
+
+  <swiper class='swiper-container' indicator-dots="true" wx:if="{{goodsImage.length > 0}}">
+    <block wx:for="{{goodsImage}}" wx:for-item="item" wx:for-index="index">
+      <swiper-item>
+        <image src="{{item.img}}"></image>
+      </swiper-item>
+    </block>
+  </swiper>
+
+  <view class='part-info-container'>
+    <view class='part-info-container__name'>{{baseInfo.part_name}}</view>
+  </view>
+
+  <view class='detail-container'>
+    <view class="{{ tabNavFixed ? 'detail-container__tab--fixed' : 'detail-container__tab'}}">
+      <view class="{{tabState === 'baseInfo' ? 'active' : ''}}" data-tab='baseInfo' bindtap='tabChangeFn'>商品信息</view>
+      <view class="{{tabState === 'replacePart' ? 'active' : ''}}" data-tab='replacePart' bindtap='tabChangeFn'>替换件信息</view>
+      <view class="{{tabState === 'adaptModel' ? 'active' : ''}}" data-tab='adaptModel' bindtap='tabChangeFn'>适配车型</view>
+    </view>
+    <view class='fixed-box' wx:if='{{tabNavFixed}}'></view>
+
+    <!--商品信息  -->
+    <view class='detail-container__base'>
+      <view class="base__detail" wx:if="{{tabState === 'baseInfo'}}">
+        <view class="base__detail__item">
+          <view class="base__detail__item__desc">名称</view>
+          <view class="base__detail__item__ct">{{baseInfo.part_name ? baseInfo.part_name : '--'}}</view>
+        </view>
+        <view class="base__detail__item">
+          <view class="base__detail__item__desc">品牌</view>
+          <view class="base__detail__item__ct">{{baseInfo.brand_manu_name ? baseInfo.brand_manu_name : '--'}}</view>
+        </view>
+        <view class="base__detail__item">
+          <view class="base__detail__item__desc">规格型号</view>
+          <view class="base__detail__item__ct">{{baseInfo.part_model ? baseInfo.part_model : '--'}}</view>
+        </view>
+        <view class="base__detail__item">
+          <view class="base__detail__item__desc">等级/系列</view>
+          <view class="base__detail__item__ct">{{baseInfo.series ? baseInfo.series : '--'}}</view>
+        </view>
+        <view class="base__detail__item">
+          <view class="base__detail__item__desc">计量单位</view>
+          <view class="base__detail__item__ct">{{baseInfo.unit ? baseInfo.unit : '--'}}</view>
+        </view>
+        <view class="base__detail__item">
+          <view class="base__detail__item__desc">最小包装</view>
+          <view class="base__detail__item__ct">{{baseInfo.min_pack ? baseInfo.min_pack : '--'}}</view>
+        </view>
+        <view class="base__detail__item">
+          <view class="base__detail__item__desc">出厂编码</view>
+          <view class="base__detail__item__ct">{{baseInfo.pmanu_code ? baseInfo.pmanu_code : '--'}}</view>
+        </view>
+        <view class="base__detail__item">
+          <view class="base__detail__item__desc">生产厂家</view>
+          <view class="base__detail__item__ct">{{baseInfo.pmanu_name ? baseInfo.pmanu_name : '--'}}</view>
+        </view>
+        <view class="base__detail__item">
+          <view class="base__detail__item__desc">产地</view>
+          <view class="base__detail__item__ct">{{baseInfo.pmanu_addr ? baseInfo.pmanu_addr : '--'}}</view>
+        </view>
+        <view class="base__detail__item">
+          <view class="base__detail__item__desc">备注信息</view>
+          <view class="base__detail__item__ct">{{baseInfo.remark ? baseInfo.remark : '--'}}</view>
+        </view>
+
+      </view>
+    </view>
+
+    <!--替换件信息  -->
+    <view class="detail-container__replace" wx:if="{{tabState === 'replacePart'}}">
+      <view class="replace-nav">
+        <view class="{{replaceTabState === 'brand' ? 'active' : ''}}" data-type='brand' bindtap='replaceTabChangeFn'>品牌替换件</view>
+        <view class="{{replaceTabState === 'oe' ? 'active' : ''}}" data-type='oe' bindtap='replaceTabChangeFn'>原厂替换件</view>
+      </view>
+
+      <view class="replace-brand" wx:if="{{replaceTabState === 'brand' && !noBrandReplace}}">
+        <view class="brand-area {{brandMenuState ? '' : 'open'}}">
+          <view class="brand {{currentBrand === '全部' ? 'active' : ''}}" data-brand="全部" bindtap='selectBrandFn'><view></view>全部</view>
+          <view class="brand {{currentBrand === item ? 'active' : ''}}" data-brand="{{item}}" bindtap='selectBrandFn' wx:for="{{brandAry}}" wx:for-item="item" wx:for-index="index"><view></view>{{item}}</view>
+        </view>
+        <view class="replace-arrow" bindtap='openBrandMenu'>
+          <view class="arrow {{brandMenuState ? 'active' : ''}}"></view>
+        </view>
+      </view>
+
+      <view class="gray-bg"></view>
+
+      <view class='detail-container__base' wx:if="{{(replaceTabState === 'brand' && !noBrandReplace) || (replaceTabState === 'oe' && !noOEReplace)}}">
+        <view class="base__detail">
+          <view class="base__detail__item">
+            <view class="base__detail__item__desc">配件品牌</view>
+            <view class="base__detail__item__ct">出厂编码</view>
+          </view>
+          <view class="base__detail__item" wx:for="{{oneBrandReplaceAry}}" wx:for-index="index" wx:for-item="item">
+            <view class="base__detail__item__desc">{{item.brand_manu_name}}</view>
+            <view class="base__detail__item__ct">{{item.pmanu_code}}</view>
+          </view>
+        </view>
+      </view>
+
+    </view>
+
+    <!--适配车型  -->
+    <view class='detail-container__adapt' wx:if="{{tabState === 'adaptModel'}}">
+      <view class='part-desc'>{{goodsName}}</view>
+      <view wx:if='{{showSeriesTipText}}'>
+        <view class="no-adapt-model">暂无适配车型信息</view>
+      </view>
+      <view wx:for="{{adaptSeriesList}}" wx:for-index="index" wx:for-item="item">
+        <view class='brand-name'>{{item.brandName}}</view>
+
+        <view wx:for="{{item.subBrands}}" wx:for-index="subIndex" wx:for-item="subItem" data-brand_name="{{item.brandName}}">
+          <view class='sub-brand-name'>{{subItem.subBrandName}}</view>
+          <view class='series'>
+            <text wx:for="{{subItem.series}}" wx:for-index="seriesIndex" wx:for-item="seriesItem" data-brand_name="{{item.brandName}}" data-sub_brand_name="{{subItem.subBrandName}}" data-series="{{seriesItem.seriesName}}" data-seriesId="{{seriesItem.seriesId}}" bindtap='adaptModelFn'>{{seriesItem.seriesName}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="no-replace" wx:if="{{tabState === 'replacePart' && replaceTabState === 'brand' && noBrandReplace}}">暂无品牌替换件信息</view>
+  <view class="no-replace" wx:if="{{tabState === 'replacePart' && replaceTabState === 'oe' && noOEReplace}}">暂无原厂替换件信息</view>
+
+  <!--右侧弹窗  -->
+  <view class='mask' data-type='mask' wx:if='{{showAdaptModel}}' bindtap='adaptModelFn'></view>
+  <view class='model-detail' animation='{{animationData}}'>
+    <view class='model-detail__title'>
+      <text style='color:#d7000f;'>{{adaptModelTitle.brand_name}}</text>
+      <text> {{adaptModelTitle.sub_brand_name}} {{adaptModelTitle.series}}</text>
+      <view class='arrow-container' data-type='arrow' bindtap='adaptModelFn' wx:if='{{showAdaptModel}}'>
+        <view class='arrow'></view>
+      </view>
+    </view>
+    <scroll-view class='adapt-area' scroll-y="true" style="height:{{goodsPrice > 0 ? windowHeight : windowHeight + 50}}px;">
+      <block wx:if='{{adaptModelList.length === 0}}'>
+        <view class="no-adapt-model">暂无适配车型信息</view>
+      </block>
+      <block wx:for="{{adaptModelList}}" wx:for-item="item" wx:for-index="index">
+        <view class='model-detail__content'>
+          <text>{{item.model_year}}款 {{item.displacement}}T {{item.aspirated_way}} {{item.gears_num}}档 {{item.trans_type}} {{item.engine_code}} {{item.structure}}</text>
+        </view>
+      </block>
+
+    </scroll-view>
+  </view>
+</view>
+
+<web-view src="{{src}}" wx:if='{{showPartDetail}}'></web-view>

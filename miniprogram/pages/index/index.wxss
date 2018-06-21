@@ -1,0 +1,46 @@
+.btn-container{
+  margin: 100rpx 30rpx;
+  width: 690rpx;
+  height: 70rpx;
+  line-height: 70rpx;
+  text-align: center;
+  border: 2rpx solid #ddd;
+  border-radius: 10rpx;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.result-contailer {
+  width: 750rpx;
+}
+
+.result-title, .result-vin, .no-result{
+  box-sizing: border-box;
+  width: 750rpx;
+  line-height: 50rpx;
+  margin-bottom: 30rpx;
+  text-align: center;
+  font-size: 30rpx;
+}
+.no-result{
+  color: #d7000f;
+}
+.result-vin{
+  padding: 0 30rpx;
+  text-align: left;
+  border: 1rpx dashed #ddd;
+}
+.model-item{
+  box-sizing: border-box;
+  padding: 0 30rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 750rpx;
+  line-height: 70rpx;
+  font-size: 24rpx;
+  color: #333;
+}
+.model-item:nth-child(odd){
+  background-color: #f4f4f4;
+}
