@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "车型结果",
+  "usingComponents": {
+    "identification-selection": "plugin://myPlugin/identification-selection"
+  }
+}

@@ -8,6 +8,7 @@
   pageState="{{pageState}}"
   noModelInfo="{{noModelInfo}}"
   noSeriesId="{{noSeriesId}}"
+  search="{{search}}"
 
   bind:toDetailFn="toDetailFn"
   bind:toSelectModelFn="toSelectModelFn"

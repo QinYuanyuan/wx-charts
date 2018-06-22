@@ -1,0 +1,15 @@
+<view class="selection">
+  <view class="selection__item" wx:for="{{ models }}" catchtap="chooseModel" data-index="{{ index }}">
+    <view class="selection__item__order">{{ index + 1 }}</view>
+    <view class="selection__item__content">{{ item.brand_name }} {{ item.manu_name}} {{ family_name }} {{ item.year_pattern }} {{ item.displacement }} {{ item.sales_desig }}</view>
+    <view class="arrow"></view>
+  </view>
+</view>
+
+<view class="selection">
+  <view class="selection__item" wx:for="{{ models }}" catchtap="chooseModel" data-index="{{ index }}">
+    <view class="selection__item__order">{{ index + 1 }}</view>
+    <view class="selection__item__content">{{ item.brand_name }} {{ item.manu_name}} {{ family_name }} {{ item.year_pattern }} {{ item.displacement }} {{ item.sales_desig }}</view>
+    <view class="arrow"></view>
+  </view>
+</view>

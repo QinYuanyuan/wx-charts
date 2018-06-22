@@ -145,11 +145,22 @@ Component({
     checkSearch(e) {
       const item = this.data.showResultList[e.currentTarget.dataset.index];
       // this.clearGlobalModel();
+      
       switch (item.item_type) {
         case 'part': // 配件
           this.blurSearch();
           let categoryId = Number(item.item_id.substr(1,4));//psn中的第1到第5位是categoryId
           this.triggerEvent('toDetailFn',{
+            search: {
+              status: false,
+              query: '',
+              inputQuery: '',
+              list: {
+                result: [],
+                status: false,
+              },
+              actualQuery: '',
+            },
             psn: item.item_id,
             category_id: categoryId
           })

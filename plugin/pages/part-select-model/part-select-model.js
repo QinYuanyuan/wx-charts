@@ -447,17 +447,20 @@ Component({
         let modelInfo = this.data.vehicle;
         modelInfo.model_id = modelId;
 
-        this.triggerEvent('goBackFn',{
-          modelId: modelId,
-          selectModelState: 1,
-          showModal: 0,
-          pageState: 'series',
-          noModelInfo: false,
-          modelInfo,
-          noSeriesId: false,
+        // this.triggerEvent('goBackFn',{
+        //   modelId: modelId,
+        //   selectModelState: 1,
+        //   showModal: 0,
+        //   pageState: 'series',
+        //   noModelInfo: false,
+        //   modelInfo,
+        //   noSeriesId: false,
+        // })
+        let pages = getCurrentPages();
+        console.log(pages);
+        wx.navigateBack({
+          detal: 1
         })
-
-        // let pages = getCurrentPages();
 
         // pages[pages.length - 2].setData({
         //   modelId: modelId,

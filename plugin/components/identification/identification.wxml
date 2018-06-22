@@ -1,2 +1,126 @@
-<!--plugin/components/identification/identification.wxml-->
-<text>plugin/components/identification/identification.wxml</text>
+<view class="identification">
+  <view class="identification__input">
+    <view class="identification__input__scan" catchtap="cameraExec">
+      <image src="http://assets.aleqipei.com/wxapp/images/home/vin.png"></image>
+    </view>
+    <view class="identification__input__key {{ inputVinAry.length > 0 ? 'identification__input__key--copy' : '' }}">
+      <view catchtap='inputVinFn'>
+        <block wx:if="{{!inputVinFocus}}">
+          <text class="placeholder" wx:if="{{ !inputVin }}">请输入车架号或上传照片识别</text>
+          <text wx:else>{{ inputVin }}</text>
+        </block>
+        <block wx:else="{{inputVinFocus}}">
+          <text>{{inputVin}}</text>
+          <text wx:if="{{showVinLine}}">|</text>
+        </block>
+      </view>
+      <image class="identification__input__key__clear" src="http://assets.aleqipei.com/wxapp/images/home/search__clear.png" bindtap="clearSearch" hidden="{{ inputVinAry.length === 0 }}"></image>
+    </view>
+
+    <view bindtap='bindCopyTap' class="copy" hidden="{{ inputVinAry.length === 0 }}">复制</view>
+    <view class="identification__selection" bindtap="selectModelFn">
+      <image wx:if="{{ modelInfo }}" src="http://assets.aleqipei.com/wxapp/images/car-high-light.png"></image>
+      <image wx:else src="http://assets.aleqipei.com/wxapp/images/car-normal.png"></image>
+    </view>
+  </view>
+
+  <view class="identification__tip" wx:if="{{ models.length > 1 }}" bindtap="toSelectionPage">
+    <text>共查询到</text><text class="identification__tip--high">{{ models.length }}</text><text>条车型</text><text class="identification__tip--high">点击查看</text>
+  </view>
+
+  <view class="identification__output">
+    <!-- 未查询车型 -->
+    <view class="identification__output--void" wx:if="{{ isInit }}">
+      <image src="http://assets.aleqipei.com/wxapp/images/identification/void.png"></image>
+      <text>暂时没有车型信息哦，快去查询车型吧。</text>
+    </view>
+    <!-- 查询成功 -->
+    <view class="identification__output--fine" wx:if="{{ !isInit && modelInfo }}">
+      <view class="identification__output--fine__item">
+        <view class="detail-name">品牌</view>
+        <view class="detail-des">{{ modelInfo.brand_name ? modelInfo.brand_name : '' }}</view>
+      </view>
+      <view class="identification__output--fine__item">
+        <view class="detail-name">厂商</view>
+        <view class="detail-des">{{ modelInfo.manu_name ? modelInfo.manu_name : '' }}</view>
+      </view>
+      <view class="identification__output--fine__item">
+        <view class="detail-name">车系</view>
+        <view class="detail-des">{{ modelInfo.family_name ? modelInfo.family_name : '' }}</view>
+      </view>
+      <view class="identification__output--fine__item">
+        <view class="detail-name">年款</view>
+        <view class="detail-des">{{ modelInfo.year_pattern ? modelInfo.year_pattern : '' }}</view>
+      </view>
+      <view class="identification__output--fine__item">
+        <view class="detail-name">排量</view>
+        <view class="detail-des">{{ modelInfo.displacement ? modelInfo.displacement : '' }}</view>
+      </view>
+      <view class="identification__output--fine__item">
+        <view class="detail-name">进气形式</view>
+        <view class="detail-des">{{ modelInfo.aspirated_way ? modelInfo.aspirated_way : '' }}</view>
+      </view>
+      <view class="identification__output--fine__item">
+        <view class="dvetail-name">发动机型号</view>
+        <view class="detail-des">{{ modelInfo.engine_model ? modelInfo.engine_model : '' }}</view>
+      </view>
+      <view class="identification__output--fine__item">
+        <view class="detail-name">底盘号</view>
+        <view class="detail-des">{{ modelInfo.chassis_num ? modelInfo.chassis_num : '' }}</view>
+      </view>
+      <view class="identification__output--fine__item">
+        <view class="detail-name">变速箱类型</view>
+        <view class="detail-des">{{ modelInfo.gearbox_type ? modelInfo.gearbox_type : '' }}</view>
+      </view>
+      <view class="identification__output--fine__item">
+        <view class="detail-name">档位数</view>
+        <view class="detail-des">{{ modelInfo.gears_num ? modelInfo.gears_num : '' }}</view>
+      </view>
+    </view>
+
+    <!-- 查询失败 -->
+    <view class="identification__output--fail" wx:if="{{ !isInit && !modelInfo && isValid }}">
+      <view>
+        <image src="http://assets.aleqipei.com/wxapp/images/identification/fail.png"></image>
+        <text>识别失败</text>
+      </view>
+      <view>该VIN码在车型库中未收录，我们将尽快完善！</view>
+    </view>
+
+    <!-- 校验vin格式失败 -->
+    <view class="identification__output--fail" wx:if="{{ !isInit && !modelInfo && !isValid }}">
+      <view>
+        <image src="http://assets.aleqipei.com/wxapp/images/identification/fail.png"></image>
+        <text>识别失败</text>
+      </view>
+      <view>车架号有误，请您修正后再次识别！</view>
+    </view>
+  </view>
+
+  <!-- 配件列表进入选择车型后确认操作 -->
+  <view class="identification__confirm" catchtap="confirmSelection" wx:if="{{modelInfo}}">确定</view>
+</view>
+<!-- wx:if="{{ (isIdentification && pageType === 'part' && modelInfo) || (pageType === 'camera' && subPageType === 'partList' && modelInfo)  || (pageType === 'cameraError' && subPageType === 'partList' && modelInfo)}}" -->
+
+
+<select-model-component 
+  wx:if="{{showSelectModel}}" 
+  show-select-model="{{showSelectModel}}" 
+  scroll-flag="{{scrollFlag}}" 
+  search-focus="{{searchFocus}}" 
+  searh-text="{{searchText}}" 
+  show-modal="{{showModal}}" 
+  vehicle="{{vehicle}}" 
+  select-model-state="{{selectModelState}}"
+  animation="{{animationData}}" 
+  model-info="{{modelInfo}}" 
+  page-state="{{pageState}}" 
+  page-type="{{ pageType }}"
+  no-model-info="{{noModelInfo}}" 
+  select-model-series="{{selectModelSeries}}" 
+  bind:getPartList="getPartList" 
+  bind:selectModelInit="selectModelInit" 
+  bind:deleteSelectModelFn="deleteSelectModelFn"
+></select-model-component>
+
+<component-vin-keyboard show-keyboard-vin="{{showKeyboardVin}}" input-vin="{{inputVin}}" input-vin-ary="{{inputVinAry}}" bind:touchVin="onTouchVin" bind:vinComplate="hideKeyboard"></component-vin-keyboard>

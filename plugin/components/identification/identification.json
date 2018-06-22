@@ -1,4 +1,6 @@
 {
   "component": true,
-  "usingComponents": {}
+  "usingComponents": {
+    "component-vin-keyboard": "../vin-keyboard-component/vin-keyboard"
+  }
 }

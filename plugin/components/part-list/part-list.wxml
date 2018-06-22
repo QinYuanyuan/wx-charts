@@ -13,13 +13,13 @@
   ></component-search>
 </view>
 
-<view style="height: 100%; {{popType !== '' || isShowBg || showImportAttr ? 'overflow:hidden' : ''}}"  wx:if="{{!search.status}}">
+<view style="{{popType !== '' || isShowBg || showImportAttr ? 'overflow:hidden' : ''}}"  wx:if="{{!search.status}}">
 
   <!--筛选部分  -->
   <view class="filter-container">
     <!--车型  -->
-    <view class="filter-item">
-      <view class="img-outer-outer" bindtap="selectModelFn">
+    <view class="filter-item" bindtap='selectModelFn'>
+      <view class="img-outer-outer">
         <view class="img-outer">
           <image wx:if="{{selectModelState === 0}}" src="http://assets.aleqipei.com/wxapp/images/car-normal.png"></image>
           <image wx:else src="http://assets.aleqipei.com/wxapp/images/car-high-light.png"></image>
@@ -193,10 +193,10 @@
 
 
   <!-- 筛选参数 -->
-  <view class="parameter-container">
-    <view class="parameter-wapper ">
+  <view class="parameter-container" style="height: {{screenHeight* 2 - 140 - 240}}rpx">
+    <!-- <view class="parameter-wapper " style="height: 100%"> -->
       <!-- 配件列表 -->
-      <scroll-view scroll-y="true" bindscrolltolower="scrollFn" style="height: 900rpx;" class="part__list {{source === '2' ? 'part__list--pad' : ''}}">
+      <scroll-view scroll-y="true"  bindscrolltolower="scrollFn" style="height: {{screenHeight* 2 - 140 - 240}}rpx" class="part__list {{source === '2' ? 'part__list--pad' : ''}}">
         <view class="part__list__item" catchtap="checkDetail" wx:for="{{ part.list }}" data-id="{{ item.goods_id }}" data-psn="{{ item.psn }}" data-category_id="{{ item.category_id }}">
           <view class="part__list__item__title">
             {{ item.part_name }}
@@ -211,30 +211,8 @@
           <text>未搜索到结果</text>
         </view>
       </scroll-view>
-    </view>
+    <!-- </view> -->
     <view class="bg" hidden="{{ popType === '' }}" style='z-index: 13; top: 0;' catchtap='hideSelectBox'></view>
   </view>
 </view>
-
-  <!-- <view class="parameter-container">
-    <view class="parameter-wapper ">
-      <view class="part__list {{source === '2' ? 'part__list--pad' : ''}}">
-        <view class="part__list__item" catchtap="checkDetail" wx:for="{{ part.list }}" data-id="{{ item.goods_id }}" data-psn="{{ item.psn }}" data-category_id="{{ item.category_id }}">
-          <view class="part__list__item__title">
-            {{ item.part_name }}
-          </view>
-          <view class="part__list__item__des">
-            <view>规格型号：{{ item.part_detail.part_model }}</view>
-            <view>出厂编码：{{ item.part_detail.pmanu_code }}</view>
-          </view>
-        </view>
-        <view class="result-none" wx:if="{{ part.status.isVoid }}">
-          <image src="http://assets.aleqipei.com/wxapp/images/none.png"></image>
-          <text>未搜索到结果</text>
-        </view>
-      </view>
-    </view>
-    <view class="bg" hidden="{{ popType === '' }}" style='z-index: 13; top: 0;' catchtap='hideSelectBox'></view>
-  </view>
-</view> -->
 

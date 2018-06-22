@@ -218,4 +218,5 @@ export default {
   // fetchCode,
   refillToken,
   partRequest,
+  epcHost,
 }

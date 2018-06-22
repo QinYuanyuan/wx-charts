@@ -1,0 +1,6 @@
+<camera-error
+  vin="{{vin}}"
+  imageSrc="{{imageSrc}}"
+  bind:backToCamera="backToCamera"
+  bind:toIdentificationFn="toIdentificationFn"
+></camera-error>

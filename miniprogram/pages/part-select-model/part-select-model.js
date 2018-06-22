@@ -25,7 +25,7 @@ Page({
       selectModelState: 1,
       showModal: 0,
       pageState: 'series',
-      noModelInfo: false,
+      noModelInfo: e.detail.noModelInfo,
       modelInfo: e.detail.modelInfo,
       noSeriesId: false,
     });

@@ -11,6 +11,16 @@ Page({
     noModelInfo: false,
     modelInfo: {},
     noSeriesId: false,
+    search: {
+      status: false, // 搜索栏搜索状态，未搜索 => false, 正在搜索 => true
+      query: '',
+      inputQuery: '',
+      list: {
+        result: [],
+        status: false,
+      },
+      actualQuery: '', 
+    },
   },
 
   onLoad: function() {
@@ -20,6 +30,13 @@ Page({
   onShow() {
     this.setData({
       pageStatus: 'partList',
+    })
+  },
+
+  onHide() {
+    this.setData({
+      pageStatus: '',
+
     })
   },
 
@@ -33,6 +50,9 @@ Page({
   },
 
   toDetailFn(e) {
+    this.setData({
+      'search.status': false
+    })
     wx.navigateTo({
       url: `/pages/part-detail/part-detail?psn=${e.detail.psn}&category_id=${e.detail.category_id}`
     });

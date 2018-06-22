@@ -1,0 +1,30 @@
+<view class="keyboard-box" animation="{{animationData}}">
+  <view class="complate" bindtap="_tapKeyboard" data-val="完成">
+      <text class="complate-txt">完成</text>
+    </view>
+  <view class="keyboard">
+    <view class="number-row">
+      <view class="number" wx:for="{{keyboardNumber}}" wx:key="keyboardNumber" wx:for-index="idx" wx:for-item="itemName" bindtap="_tapKeyboard" hover-class="board_bg" data-val="{{itemName}}" hover-start-time='0' hover-stay-time="100">
+        {{itemName}}
+      </view>
+    </view>
+    <view class="letter-row">
+      <view class="letter" wx:for="{{oneLetter}}" wx:key="oneLetter" wx:for-index="idx" wx:for-item="itemName" bindtap="_tapKeyboard" hover-class="board_bg" data-val="{{itemName}}" hover-start-time='0' hover-stay-time="100">
+        {{itemName}}
+      </view>
+    </view>
+    <view class="letter-row towLetter">
+      <view class="letter" wx:for="{{twoLetter}}" wx:key="twoLetter" wx:for-index="idx" wx:for-item="itemName" bindtap="_tapKeyboard" hover-class="board_bg" data-val="{{itemName}}" hover-start-time='0' hover-stay-time="100">
+        {{itemName}}
+      </view>
+    </view>
+    <view class="letter-row threeLetter">
+      <view class="letter" wx:for="{{threeLetter}}" wx:key="threeLetter" wx:for-index="idx" wx:for-item="itemName" bindtap="_tapKeyboard" hover-class="board_bg" data-val="{{itemName}}" hover-start-time='0' hover-stay-time="100">
+        {{itemName}}
+      </view>
+      <view hover-class="board_bg" hover-start-time='0' hover-stay-time="100" bindtap='delValue' class="letter">
+        <image class="remove-img" src="http://assets.aleqipei.com/wxapp/images/del.png"></image>
+      </view>
+    </view>
+  </view>
+</view>

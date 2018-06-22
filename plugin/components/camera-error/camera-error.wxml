@@ -1,0 +1,18 @@
+<view class="edit_contet">
+  <view class="text">{{message}}</view>
+  <view class="edit_img_box">
+    <image class="out_img" src="http://assets.aleqipei.com/wxapp/images/photo@2x.png"></image>
+    <image src="{{imageSrc}}"></image>
+  </view>
+  <view class="vin_box">
+    <view class="text">
+      <input type="text" value='{{inputValue}}' maxlength="17" confirm-type="done" bindinput='inputEvent' bindblur='blurEvent' bindconfirm='blurEvent'>{{inputValue}}</input>
+    </view>
+    <image wx:if="{{enable}}" bindtap="sureEvent" class="sure_btn" src="http://assets.aleqipei.com/wxapp/images/sure_red@2x.png"></image>
+    <image wx:if="{{!enable}}" class="sure_btn" src="http://assets.aleqipei.com/wxapp/images/sure_disable@2x.png"></image>
+    <view wx:if="{{showLoading}}" class="loading_box">
+      <image class="sure_btn" src="http://assets.aleqipei.com/wxapp/images/camera_loading.gif"></image>
+    </view>
+  </view>
+</view>
+<view class="take_photo_btn" bindtap='backToCamera'>重新拍照</view>

@@ -1,0 +1,4 @@
+<identification-selection
+  models="{{models}}"
+  bind:chooseModel="chooseModel"
+></identification-selection>

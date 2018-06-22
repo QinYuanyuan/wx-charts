@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "识别车型",
+  "usingComponents": {
+    "camera-error": "plugin://myPlugin/camera-error"
+  }
+}

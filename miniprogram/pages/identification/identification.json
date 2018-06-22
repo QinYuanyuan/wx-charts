@@ -1,1 +1,6 @@
-{}
+{
+  "navigationBarTitleText": "查询车型",
+  "usingComponents": {
+    "identification": "plugin://myPlugin/identification"
+  }
+}

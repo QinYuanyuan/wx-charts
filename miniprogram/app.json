@@ -5,7 +5,9 @@
     "pages/part-detail/part-detail",
     "pages/part-select-model/part-select-model",
     "pages/camera/camera",
-    "pages/identification/identification"
+    "pages/identification/identification",
+    "pages/identification-selection/identification-selection",
+    "pages/camera-error/camera-error"
   ],
   "plugins": {
     "myPlugin": {

@@ -1,66 +1,53 @@
-// pages/identification/identification.js
 Page({
 
-  /**
-   * 页面的初始数据
-   */
   data: {
-  
+    vin: '',
+    model: {},
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-  
+  onLoad: function(options) {
+    console.log('identification onload',options)
+    this.setData({
+      vin: options.vin,
+      model: JSON.parse(options.model),
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
+  toSelectionPage() {
+    wx.navigateTo({
+      url: `/pages/identification-selection/identification-selection`,
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
+  confirmSelection(options) {
+    console.log(options);
+
+    const pages = getCurrentPages();
+    let pageIndex;
+    pages.forEach((item, index) => {
+      if (item.route.indexOf('part-list') >= 0) {
+        pageIndex = index;
+      }
+    })
+    const previousPage = pages[pageIndex];
+
+    let modelInfo = options.detail.modelInfo;
+    if (modelInfo) {
+      previousPage.setData({
+        modelId: modelInfo.model_id ? modelInfo.model_id : '',
+        modelInfo,
+        pageType: 'identification',
+      });
+    } else {
+      previousPage.setData({
+        modelId: '',
+        modelInfo: null,
+        pageType: 'identification',
+      });
+    }
+    wx.navigateBack({
+      delta: pages.length - pageIndex - 1
+    });
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
-  }
 })

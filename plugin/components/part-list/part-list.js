@@ -26,22 +26,14 @@ Component({
     noSeriesId: {
       type: Boolean,
     },
+    search: {
+      type: Object,
+    }
   },
 
   data: {
-    screenHeight: api.getSystemInfo().windowHeight + 'px', //设置height
+    screenHeight: api.getSystemInfo().windowHeight, //设置height
 
-    // 搜索
-    search: {
-      status: false, // 搜索栏搜索状态，未搜索 => false, 正在搜索 => true
-      query: '',
-      inputQuery: '',
-      list: {
-        result: [],
-        status: false,
-      },
-      actualQuery: '', // ******************************
-    },
     tabState: '', //搜索结果中的tab状态
     showResultList: [], //各个tab下的结果展示列表
 
@@ -136,7 +128,7 @@ Component({
     this.getModelByIdFn();
   },
   ready() {
-
+    console.log(this.data.screenHeight);
   },
 
   /**

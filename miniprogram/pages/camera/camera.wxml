@@ -1,1 +1,5 @@
-<camera-plugin bind:goBackFn="goBackFn"/>
+<camera-plugin 
+bind:goBackFn="goBackFn"
+bind:toIdentificationFn="toIdentificationFn"
+bind:toCameraErrorFn="toCameraErrorFn"
+/>

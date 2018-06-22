@@ -1,2 +1,6 @@
-<!--pages/identification/identification.wxml-->
-<text>pages/identification/identification.wxml</text>
+<identification
+  vin="{{vin}}"
+  model="{{model}}"
+  bind:toSelectionPage="toSelectionPage"
+  bind:confirmSelection="confirmSelection"
+></identification>

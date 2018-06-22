@@ -1,0 +1,90 @@
+.keyboard-box {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 750rpx;
+  height: 0;
+  box-sizing: border-box;
+  background: #e1e1e1;
+  z-index: 99;
+}
+.complate{
+  border-top: 1px solid #e4e4e4;
+  height: 49px;
+  line-height: 49px;
+  width: 100%;
+  background: #fff;
+}
+.complate .complate-txt{
+  color: #d7000f;
+  font-size: 34rpx;
+  float: right;
+  padding: 0 20rpx;
+}
+.keyboard{
+  padding: 0 20rpx;
+}
+.keyboard .letter {
+  margin-top: 10px;
+}
+
+.keyboard .number-row {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.keyboard .number-row .number {
+  width: 64rpx;
+  height: 49px;
+  line-height: 49px;
+  text-align: center;
+  background-color: #fff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  font-weight: 500;
+}
+
+.keyboard .letter-row {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.keyboard .letter-row .letter {
+  width: 64rpx;
+  height: 49px;
+  line-height: 49px;
+  text-align: center;
+  background-color: #fff;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.keyboard .letter-row .remove-img {
+  width: 24px;
+  height: 24px;
+  margin-top: 12px;
+}
+
+.keyboard .number-row .board_bg, .keyboard .letter-row .board_bg {
+  box-shadow: 0 0 0 #e5e5e5;
+  background-color: #e5e5e5;
+  color: red;
+}
+
+.keyboard .towLetter .letter:nth-child(1), .keyboard .threeLetter .letter:nth-child(1) {
+  font-size: 24rpx;
+  color: #d7000f;
+}
+
+.keyboard .threeLetter .letter:nth-child(1) {
+  font-size: 30rpx;
+}
+
+.keyboard .threeLetter .letter:nth-child(1), .keyboard .threeLetter .letter:last-child {
+  width: 100rpx;
+}

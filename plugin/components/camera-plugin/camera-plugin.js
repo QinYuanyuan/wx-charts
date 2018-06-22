@@ -112,9 +112,29 @@ Component({
         success: (res) => {
           console.log('通过vin-pro接口识别图片返回的结果', res);
           let result = JSON.parse(res.data);
-          this.triggerEvent('goBackFn',{
-            vinResult: result,
-          })
+          if (result.success) {
+            let data = result.result;
+            console.log(1234,data)
+            if (data.models.length > 0) {
+              let result = JSON.stringify(data);
+              this.triggerEvent('toIdentificationFn', {
+                result: data,
+              })
+            } else {
+              console.log('没有车型信息，进一步查看is_valid字段')
+              if (data.meta.is_valid === 'false') {
+                console.log('is_valid为false')
+                this.triggerEvent('toCameraErrorFn',{
+                  result: data,
+                })
+              } else {
+                console.log('is_valid为true');
+                this.triggerEvent('toIdentificationFn', {
+                  result: data
+                })
+              }
+            }
+          }
         },
         fail: (err) => {
           console.log(err);
