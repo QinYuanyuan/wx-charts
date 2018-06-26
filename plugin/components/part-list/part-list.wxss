@@ -311,8 +311,6 @@ page {
 	transform: translateY(50%) rotate(-45deg);
 }
 
-
-
 .parameter-area .parameter-title .active text {
   color: #d7000f;
 }
@@ -337,36 +335,38 @@ page {
   background: #fff;
 }
 .brand-content {
-  /* width: 85%; */
-  width: 640rpx;
+  width: 750rpx;
   height: 100%;
   position: fixed;
-  padding-top: 80rpx;  
+  padding-top: 90rpx;  
   top: 0;
   right: 0;
   z-index: 99;
   background-color: #fff;
+  overflow: hidden;
 }
 .brand-content scroll-view {
-  /* padding-top: 80rpx; */
   padding-right:48rpx;
   padding-bottom:100rpx;
 }
 .import-content {
-  /* width: 85%; */
-  width: 640rpx;
+  box-sizing: border-box;
+  width: 750rpx;
   height: 92%; 
   position: fixed;
-  top: 0;
+  top: 290rpx;
   right: 0;
   z-index: 99;
-  padding-bottom: 188rpx;
+   padding-bottom: 100rpx;     
   background-color: #fff;
   overflow: auto;
   border-top: 1rpx solid #e3e3e3;  
 }
 .import-content .import-list {
   padding-left: 20rpx;
+}
+.import-content .last-import-list{
+  margin-bottom: 100rpx;
 }
 .import-content .import-title {
   display: flex;
@@ -422,6 +422,7 @@ page {
   border: 1rpx solid #d7000f;
   color: #d7000f;
 }
+
 .brand-content .alpha__item_hd {
   height: 40rpx;
   margin: 20rpx 0 10rpx 0;
@@ -438,7 +439,7 @@ page {
 }
 
 .brand-content .alpha__item__bd .all-brand, .brand-content .alpha__item__bd .all-category {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 142rpx;
   background-color: #f7f7f7;
@@ -447,7 +448,7 @@ page {
   white-space: nowrap;
 }
  .brand-content .alpha__item__bd .all-category {
-  left: 132rpx;
+  left: 20rpx;
 } 
 .brand-content .alpha__item .alpha__item__bd .alpha__item__brand {
   position: relative;
@@ -471,7 +472,6 @@ page {
 	position: fixed;
 	right: 10rpx;
 	top: 100rpx;
-	/* bottom: 8rpx; */
 	z-index: 9999;
 	display: flex;
 	flex-direction: column;
@@ -509,8 +509,8 @@ page {
 }
 
 .parameter-content .cats-content, .parameter-content .common-content {
-   display: flex; 
-   flex-direction: row; 
+  display: flex; 
+  flex-direction: row; 
   background: #fff;
   border-top: 1px solid #e3e3e3;
 }
@@ -526,9 +526,9 @@ page {
 
 .import-content .btn-area {
   position: fixed;
-  bottom: 0;
-  right: 0;  
-  width: 640rpx;
+  bottom: 220rpx;   
+  right: 0;     
+  width: 750rpx;
   line-height: 88rpx;
   height: 88rpx;
   display: flex;
@@ -770,7 +770,7 @@ view.sort__item:not(:last-child) {
   display: flex;
   flex-direction: row;
   width: 100%;
-  padding-bottom: 10rpx;
+  height: 170rpx;
   background-color: #fff;
 }
 .filter-item{

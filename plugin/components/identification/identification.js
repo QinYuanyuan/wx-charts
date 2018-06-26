@@ -22,21 +22,21 @@ Component({
     vehicle: {},
 
 
-    imageSrc: '',//截取的vin码图片
-    needCropParam: true,//是否需要传入截图参数
+    imageSrc: '', //截取的vin码图片
+    needCropParam: true, //是否需要传入截图参数
     pageType: '',
-    modelInfo: null,//车型信息
-    modelId: '',//车型id
-    isModelId: true,//判断车型是否有model_id
+    modelInfo: null, //车型信息
+    modelId: '', //车型id
+    isModelId: true, //判断车型是否有model_id
 
     // 使用vin键盘组件需要的字段（从询价页复制）
-    inputVin: '',//输入的vin码
-    inputVinAry: [],//vin码拆分成的数组
-    inputVinFocus: false,//vin码输入框获取焦点
-    timer1: '',//vin码虚拟光标定时器
-    showVinLine: false,//vin码模拟的光标线
-    showKeyboardVin: false,//vin码键盘的显示
-    vinImage: '',//上传的vin码图片地址
+    inputVin: '', //输入的vin码
+    inputVinAry: [], //vin码拆分成的数组
+    inputVinFocus: false, //vin码输入框获取焦点
+    timer1: '', //vin码虚拟光标定时器
+    showVinLine: false, //vin码模拟的光标线
+    showKeyboardVin: false, //vin码键盘的显示
+    vinImage: '', //上传的vin码图片地址
     // 使用vin键盘组件需要的字段（从询价页复制）
   },
   attached() {
@@ -44,14 +44,23 @@ Component({
   },
   ready() {
     console.log('identification ready')
+    console.log(this.data.model, this.data.vin)
 
     this.setData({
       inputVin: this.data.vin ? this.data.vin : '',
       inputVinAry: this.data.vin ? this.data.vin.split('') : [],
     })
-    console.log(this.data.model.models)
-    if(this.data.model.models.length){
+
+    if (JSON.stringify(this.data.model) !== '{}') {
+
       this.getItemFromURL();
+      // if (this.data.model.models.length) {
+      //   this.getItemFromURL();
+      // }
+    }
+
+    if (this.data.vin) {
+      this.getItemFromVIN();
     }
 
     // this.setData({
@@ -160,7 +169,9 @@ Component({
           .then((code) => {
             return services._request('/token', {
               method: 'GET',
-              data: { code: code },
+              data: {
+                code: code
+              },
             });
           }).then((r) => {
             if (r.success) {
@@ -197,18 +208,23 @@ Component({
         method: 'GET',
       })
     }, // 统计公众号识别成功模版进入
-    onShareAppMessage() {//分享
+    onShareAppMessage() { //分享
       return {
         path: `/pages/identification/identification?pageType=share&vin=${this.data.inputVin}`
       };
     },
     cameraExec() {
-      const pageType = this.data.pageType;
-      if (pageType === 'part') {
-        wx.redirectTo({ url: `/pages/camera/camera?pageType=identification&prevPageType=part&subPageType=${this.data.subPageType}` });
-      } else {
-        wx.redirectTo({ url: `/pages/camera/camera?pageType=identification&subPageType=${this.data.subPageType}` });
-      }
+      this.triggerEvent('toCameraFn');
+      // const pageType = this.data.pageType;
+      // if (pageType === 'part') {
+      //   wx.redirectTo({
+      //     url: `/pages/camera/camera?pageType=identification&prevPageType=part&subPageType=${this.data.subPageType}`
+      //   });
+      // } else {
+      //   wx.redirectTo({
+      //     url: `/pages/camera/camera?pageType=identification&subPageType=${this.data.subPageType}`
+      //   });
+      // }
     },
     clearSearch() {
       this.setData({
@@ -216,9 +232,9 @@ Component({
         inputVinAry: []
       });
     },
-    bindCopyTap() {//复制
+    bindCopyTap() { //复制
       let self = this;
-      wx.setClipboardData({//wx:api设置系统剪贴板的内容
+      wx.setClipboardData({ //wx:api设置系统剪贴板的内容
         data: self.data.inputVin,
         success: () => {
           wx.showToast({
@@ -244,7 +260,7 @@ Component({
         }
       }
     },
-    selectModelFn() {//选择车型
+    selectModelFn() { //选择车型
       this.hideKeyboardWithoutExec();
       const modelInfo = this.data.modelInfo ? this.data.modelInfo : {};
       console.log(modelInfo)
@@ -304,7 +320,11 @@ Component({
       })
     },
     getPartList(event) {
-      const { modelId, seriesId, modelInfo } = event.detail;
+      const {
+        modelId,
+        seriesId,
+        modelInfo
+      } = event.detail;
       console.log(modelId)
       console.log(seriesId)
 
@@ -390,8 +410,8 @@ Component({
           pageType: 'identification',
         });
       }
-      
-      this.triggerEvent('confirmSelection',{
+
+      this.triggerEvent('confirmSelection', {
         model: this.data.modelId,
         modelInfo: this.data.modelInfo,
         pageType: 'identification'
@@ -449,7 +469,9 @@ Component({
 
             _this.getItemFromVIN();
           } else {
-            _this.setData({ isInit: true });
+            _this.setData({
+              isInit: true
+            });
           }
         }
       })
@@ -469,7 +491,7 @@ Component({
         isIdentification: true,
       })
     },
-    
+
     // 通过VIN或者图片获取车型信息
     getVinAndModelFn() {
       let startTime = new Date().getTime();
@@ -521,7 +543,7 @@ Component({
       console.log('传入的截图的值', formData)
       let startTime = new Date().getTime();
       wx.uploadFile({
-        url: image.getVINhost + '/ocr/vin-pro',
+        url: services.epcHost + '/ocr/vin-pro',
         filePath: this.data.imageSrc,
         name: 'file_data',
         formData: formData,
@@ -605,7 +627,7 @@ Component({
 
       return new Promise((resolve, reject) => {
         wx.request({
-          url: image.getVINhost + '/ocr/vin-pro',
+          url: services.epcHost + '/ocr/vin-pro',
           method: 'POST',
           data: formData,
           dataType: 'json',
@@ -651,7 +673,7 @@ Component({
     },
 
 
-    getUnionid() {//获取unionid
+    getUnionid() { //获取unionid
       services.fetchCode().then(res => {
         return services.request('/public/unionid?code=' + res);
       }).then(res => {
@@ -660,7 +682,7 @@ Component({
         }
       })
     },
-    getToken() {//获取token
+    getToken() { //获取token
       if (app.globalData.token) {
         this.getUnionid();
       } else {
@@ -678,7 +700,7 @@ Component({
         })
       }
     },
-    noticeNailing() {//获取图片路径
+    noticeNailing() { //获取图片路径
       image._uploadImage('/images', this.data.imageSrc, 'key').then(res => {
         if (res.success) {
           this.setData({
@@ -690,13 +712,19 @@ Component({
         console.log(err)
       })
     },
-    uploadImage(unionid) {//通知钉钉
-      services._request('/vins/fail', { method: 'POST', data: { union_id: unionid, pic_url: this.data.requestImagePath } });
+    uploadImage(unionid) { //通知钉钉
+      services._request('/vins/fail', {
+        method: 'POST',
+        data: {
+          union_id: unionid,
+          pic_url: this.data.requestImagePath
+        }
+      });
     },
 
 
 
-    vinMove() {//vin光标动画
+    vinMove() { //vin光标动画
       if (this.data.showVinLine) {
         this.setData({
           showVinLine: false
@@ -708,7 +736,7 @@ Component({
       }
     },
 
-    onTouchVin(e) {//监听子组件的键盘事件执行该函数
+    onTouchVin(e) { //监听子组件的键盘事件执行该函数
       this.setData({
         inputVin: e.detail.inputVin,
         inputVinAry: e.detail.inputVinAry
@@ -731,7 +759,7 @@ Component({
 
     },
 
-    inputVinFn() {//点击输入vin码
+    inputVinFn() { //点击输入vin码
       this.hideKeyboard();
       clearInterval(this.data.timer1);
       this.data.timer1 = setInterval(this.vinMove, 800);
@@ -773,8 +801,8 @@ Component({
         })
       }
     },
-    hideKeyboard() {//隐藏键盘
-      if (this.data.showKeyboardVin) {//隐藏vin码键盘
+    hideKeyboard() { //隐藏键盘
+      if (this.data.showKeyboardVin) { //隐藏vin码键盘
         if (this.data.inputVinAry.length > 0) {
           if (this.data.inputVinAry.length < 17) {
             wx.showModal({

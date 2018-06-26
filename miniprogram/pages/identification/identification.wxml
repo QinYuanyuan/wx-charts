@@ -3,4 +3,5 @@
   model="{{model}}"
   bind:toSelectionPage="toSelectionPage"
   bind:confirmSelection="confirmSelection"
+  bind:toCameraFn="toCameraFn"
 ></identification>

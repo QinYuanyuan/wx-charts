@@ -19,12 +19,19 @@ Page({
         result: [],
         status: false,
       },
-      actualQuery: '', 
+      actualQuery: '',
     },
+    categoryId: '',
   },
 
-  onLoad: function() {
-    
+  onLoad: function(options) {
+    if (JSON.stringify(options) !== '{}') {
+      let mdoelInfo = JSON.parse(options.modelInfo);
+      this.setData({
+        modelId: options.modelId ? options.modelId : '',
+        modelInfo: mdoelInfo,
+      })
+    }
   },
 
   onShow() {
@@ -36,7 +43,6 @@ Page({
   onHide() {
     this.setData({
       pageStatus: '',
-
     })
   },
 
@@ -60,8 +66,14 @@ Page({
 
   toCameraFn() {
     wx.navigateTo({
-      url: '/pages/camera/camera',
+      url: `/pages/camera/camera`,
     })
+  },
+
+  toIdentificationFn(e) {
+    wx.redirectTo({
+      url: `/pages/identification/identification?pageType=part-search&vin=${e.detail.vin}`
+    });
   },
 
 })

@@ -1,6 +1,9 @@
 let api = require('../../api/api.js');
 let s = require('../../api/services.js');
 let services = s.default;
+let height = api.getSystemInfo().windowHeight;
+let width = api.getSystemInfo().windowWidth;
+console.log(height / (width / 750));
 
 Component({
   properties: {
@@ -28,11 +31,15 @@ Component({
     },
     search: {
       type: Object,
+    },
+    categoryId: {
+      type: String,
     }
   },
 
   data: {
-    screenHeight: api.getSystemInfo().windowHeight, //设置height
+    screenHeight: height / ( width / 750) , //设置height
+    sBottom: height / (width / 750),
 
     tabState: '', //搜索结果中的tab状态
     showResultList: [], //各个tab下的结果展示列表
@@ -54,7 +61,7 @@ Component({
 
     index: -1,
     categoryParentId: '',
-    categoryId: '',
+    // categoryId: '',
     categoryName: '',
     sortIndex: '0',
     importAttr: [], //显示的重要参数
@@ -124,11 +131,26 @@ Component({
   },
 
   attached() {
+    let category = wx.getStorageSync('category');
+    this.setData({
+      categoryId: category.categoryId ? category.categoryId : '',
+      categoryName: category.categoryName ? category.categoryName : '',
+      allFilterSelected: category.categoryId && category.categoryId === '25,26,27,28' ? true : false,
+      allBrakeSelected: category.categoryId && category.categoryId === '18,19,3718,3719' ? true : false,
+    })
+
+    // 当车型信息中没有model_id时，要通过车型信息的子品牌名称和车系名称获取该series_id，然后通过series_id来进行配件的筛选
+    if (JSON.stringify(this.data.modelInfo) !== '{}' && !this.data.modelInfo.model_id) {
+      this.getSeriesIdFn();
+    }
+
     this.getPartListFromEpc();
     this.getModelByIdFn();
+    if (category.categoryId){
+      this.getPartAttrFromEpc();
+    }
   },
   ready() {
-    console.log(this.data.screenHeight);
   },
 
   /**
@@ -145,6 +167,11 @@ Component({
       this.triggerEvent('toDetailFn',{
         psn: e.detail.psn,
         category_id: e.detail.category_id
+      })
+    },
+    toIdentificationFn(e){
+      this.triggerEvent('toIdentificationFn',{
+        vin: e.detail.vin
       })
     },
     // getToken() {//获取token
@@ -1355,7 +1382,9 @@ Component({
         categoryId: '',
         categoryName: '',
         // categoryParentId: this.data.categoryList[index].id,
-        categoryList: this.data.categoryList
+        categoryList: this.data.categoryList,
+        allFilterSelected: false,
+        allBrakeSelected: false,
       })
       setTimeout(() => {
         this.setData({
@@ -1432,6 +1461,12 @@ Component({
         propertyList: [],
         commonAttr: [],
       })
+
+      wx.setStorageSync('category', {
+        categoryId: categoryId,
+        categoryName: categoryName
+      })
+
       setTimeout(function() {
         self.setData({
           popType: ''

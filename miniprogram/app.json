@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/index/index",
     "pages/part-list/part-list",
+    "pages/index/index",
     "pages/part-detail/part-detail",
     "pages/part-select-model/part-select-model",
     "pages/camera/camera",

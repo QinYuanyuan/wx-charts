@@ -9,7 +9,7 @@ Page({
     console.log('identification onload',options)
     this.setData({
       vin: options.vin,
-      model: JSON.parse(options.model),
+      model: options.model ? JSON.parse(options.model) : {},
     })
   },
 
@@ -19,35 +19,50 @@ Page({
     })
   },
 
+  toCameraFn() {
+    wx.redirectTo({
+      url: `/pages/camera/camera`,
+    })
+  },
+
   confirmSelection(options) {
     console.log(options);
 
-    const pages = getCurrentPages();
-    let pageIndex;
-    pages.forEach((item, index) => {
-      if (item.route.indexOf('part-list') >= 0) {
-        pageIndex = index;
-      }
-    })
-    const previousPage = pages[pageIndex];
+    // const pages = getCurrentPages();
+    // console.log('identification',pages);
+    // let pageIndex;
+    // pages.forEach((item, index) => {
+    //   if (item.route.indexOf('part-list') >= 0) {
+    //     pageIndex = index;
+    //   }
+    // })
+    // const previousPage = pages[pageIndex];
+
+    // let modelInfo = options.detail.modelInfo;
+    // let modelId = modelInfo.model_id ? modelInfo.model_id : '';
+    // if (modelInfo) {
+    //   previousPage.setData({
+    //     modelId: modelInfo.model_id ? modelInfo.model_id : '',
+    //     modelInfo,
+    //     pageType: 'identification',
+    //   });
+    // } else {
+    //   previousPage.setData({
+    //     modelId: '',
+    //     modelInfo: null,
+    //     pageType: 'identification',
+    //   });
+    // }
+    // wx.navigateBack({
+    //   delta: pages.length - pageIndex - 1
+    // });
 
     let modelInfo = options.detail.modelInfo;
-    if (modelInfo) {
-      previousPage.setData({
-        modelId: modelInfo.model_id ? modelInfo.model_id : '',
-        modelInfo,
-        pageType: 'identification',
-      });
-    } else {
-      previousPage.setData({
-        modelId: '',
-        modelInfo: null,
-        pageType: 'identification',
-      });
-    }
-    wx.navigateBack({
-      delta: pages.length - pageIndex - 1
-    });
+    let modelId = modelInfo.model_id ? modelInfo.model_id : '';
+
+    wx.redirectTo({
+      url: `/pages/part-list/part-list?modelId=${modelId}&modelInfo=${JSON.stringify(modelInfo)}&pageType=identification`,
+    })
   },
 
 })

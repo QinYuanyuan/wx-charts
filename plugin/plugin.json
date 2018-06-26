@@ -1,12 +1,13 @@
 {
   "publicComponents": {
-    "camera-plugin": "components/camera-plugin/camera-plugin",
     "part-list": "components/part-list/part-list",
+    "camera-plugin": "components/camera-plugin/camera-plugin",
     "part-detail": "components/part-detail/part-detail",
     "identification": "components/identification/identification",
     "part-select-model": "components/part-select-model/part-select-model",
     "identification-selection": "components/identification-selection/identification-selection",
-    "camera-error": "components/camera-error/camera-error"
+    "camera-error": "components/camera-error/camera-error",
+    "select-model-component": "components/select-model-component/select-model-component"
   },
   "pages": {
   },

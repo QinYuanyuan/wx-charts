@@ -5,13 +5,15 @@
   model-info="{{modelInfo}}"
   selectModelState="{{selectModelState}}"
   showModal="{{showModal}}"
-  pageState="{{pageState}}"
+  pageState="{{pageState}}" 
   noModelInfo="{{noModelInfo}}"
   noSeriesId="{{noSeriesId}}"
   search="{{search}}"
+  categoryId="{{categoryId}}"
 
   bind:toDetailFn="toDetailFn"
   bind:toSelectModelFn="toSelectModelFn"
   bind:toCameraFn="toCameraFn"
+  bind:toIdentificationFn="toIdentificationFn"
 
 />
