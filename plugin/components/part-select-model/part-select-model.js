@@ -1,6 +1,8 @@
 let api = require('../../api/api.js');
 let s = require('../../api/services.js');
 let services = s.default;
+let height = api.getSystemInfo().windowHeight;
+let width = api.getSystemInfo().windowWidth;
 
 Component({
   properties: {
@@ -69,6 +71,7 @@ Component({
     noSearchResult: false, //车系搜索结果为空
     noMoreResult: false,
     inputValue: '',
+    scrollHeight: '',
   },
   ready() {
     let modelInfo = this.data.modelInfo;
@@ -132,6 +135,8 @@ Component({
           'vehicle.displacement': '',
         })
       }
+
+      
     }
     this.getBrandsFn();
 
@@ -147,6 +152,9 @@ Component({
       timingFunction: "ease",
       delay: 0
     });
+    this.setData({
+      scrollHeight: height / (width / 750),
+    })
   },
   
   methods: {

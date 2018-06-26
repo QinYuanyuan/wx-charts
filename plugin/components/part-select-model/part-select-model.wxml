@@ -21,7 +21,7 @@
   <!--选择品牌  -->
   <block wx:if="{{!showSeriesResult}}">
     <block wx:if="{{pageState === 'brand'}}">
-      <scroll-view scroll-y="true" scroll-into-view="{{alpha}}" style="height: {{scrollHeight - 45}}px;">
+      <scroll-view scroll-y="true" scroll-into-view="{{alpha}}" style="height: {{scrollHeight - 90}}rpx;">
         <view class="alpha__item" wx:if="{{hot_list.length}}">
           <view class="alpha__item__hd">热门品牌</view>
           <view class="hot__list">
