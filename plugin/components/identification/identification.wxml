@@ -100,8 +100,6 @@
   <!-- 配件列表进入选择车型后确认操作 -->
   <view class="identification__confirm" catchtap="confirmSelection" wx:if="{{modelInfo}}">确定</view>
 </view>
-<!-- wx:if="{{ (isIdentification && pageType === 'part' && modelInfo) || (pageType === 'camera' && subPageType === 'partList' && modelInfo)  || (pageType === 'cameraError' && subPageType === 'partList' && modelInfo)}}" -->
-
 
 <select-model-component 
   wx:if="{{showSelectModel}}" 

@@ -1,6 +1,3 @@
-<!-- <import src="../../src/wetoast.wxml" /> -->
-<!-- <template is="wetoast" data="{{...__wetoast__}}" /> -->
-
 <view wx:if='{{!showPartDetail}}' class="wx-container">
   <!-- <view wx:if="{{tabState === 'baseInfo'}}" class='bg' bindtouchstart='touchStartFn' bindtouchmove='touchMoveFn'></view> -->
 

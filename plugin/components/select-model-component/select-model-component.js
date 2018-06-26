@@ -1,6 +1,3 @@
-// import services from "../../../utils/services.js";
-// let app = getApp();
-
 let s = require('../../api/services.js');
 let services = s.default;
 

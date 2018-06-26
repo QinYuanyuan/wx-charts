@@ -3,7 +3,6 @@ let s = require('../../api/services.js');
 let services = s.default;
 let height = api.getSystemInfo().windowHeight;
 let width = api.getSystemInfo().windowWidth;
-console.log(height / (width / 750));
 
 Component({
   properties: {
@@ -18,7 +17,6 @@ Component({
     },
     pageState: {
       type: 'String',
-      // value: 'brand'
     },
     noModelInfo: {
       type: Boolean,
@@ -61,7 +59,6 @@ Component({
 
     index: -1,
     categoryParentId: '',
-    // categoryId: '',
     categoryName: '',
     sortIndex: '0',
     importAttr: [], //显示的重要参数
@@ -81,17 +78,12 @@ Component({
     screeningIndex: 0, // 筛选中的属性的索引值
     isFetching: false,
 
-    // pageState: 'brand',
     selectModelState: 0, // 车型选择标志 0:当前无车型选择 1:有车型
     showModal: 0, //车型选择的模态框
     searchFocus: false, //搜索框是否聚焦
     searchText: '', //搜索框中的文本
-    // modelId: '',
     seriesId: '', //车系id
 
-    // modelInfo: {}, // 选择的车型
-    // noModelInfo: false, //不存在本地车型
-    // selectModelSeries: {},//选择的车系
     vehicle: {},
     popType: '', // 展示弹框类型
     alphaPos: '', // 品牌滚动位置
@@ -131,13 +123,13 @@ Component({
   },
 
   attached() {
-    let category = wx.getStorageSync('category');
-    this.setData({
-      categoryId: category.categoryId ? category.categoryId : '',
-      categoryName: category.categoryName ? category.categoryName : '',
-      allFilterSelected: category.categoryId && category.categoryId === '25,26,27,28' ? true : false,
-      allBrakeSelected: category.categoryId && category.categoryId === '18,19,3718,3719' ? true : false,
-    })
+    // let category = wx.getStorageSync('category');
+    // this.setData({
+    //   categoryId: category.categoryId ? category.categoryId : '',
+    //   categoryName: category.categoryName ? category.categoryName : '',
+    //   allFilterSelected: category.categoryId && category.categoryId === '25,26,27,28' ? true : false,
+    //   allBrakeSelected: category.categoryId && category.categoryId === '18,19,3718,3719' ? true : false,
+    // })
 
     // 当车型信息中没有model_id时，要通过车型信息的子品牌名称和车系名称获取该series_id，然后通过series_id来进行配件的筛选
     if (JSON.stringify(this.data.modelInfo) !== '{}' && !this.data.modelInfo.model_id) {
@@ -146,16 +138,13 @@ Component({
 
     this.getPartListFromEpc();
     this.getModelByIdFn();
-    if (category.categoryId){
-      this.getPartAttrFromEpc();
-    }
+    // if (category.categoryId){
+    //   this.getPartAttrFromEpc();
+    // }
   },
   ready() {
   },
 
-  /**
-   * 组件的方法列表
-   */
   methods: {
     scrollFn(){
       this.getMorePartListFromEpc()
@@ -242,10 +231,6 @@ Component({
 
       if (data.series_id) {
         this.setData({
-          // categoryName: data.category_name ? data.category_name : this.data.categoryName,
-          // categoryId: data.category_id ? data.category_id : this.data.categoryId,
-          // brandName: data.brand_name ? data.brand_name : '',
-          // brandId: data.brand_id ? data.brand_id : '',
           seriesId: data.series_id ? data.series_id : this.data.seriesId,
           seriesName: data.series_name ? data.series_name : this.data.seriesName,
           categoryList: this.data.categoryList,
@@ -361,9 +346,6 @@ Component({
       }).then(() => {
         return this.getPartListFromEpc()
       })
-      // .then(() => {
-      //   return this.recognizeUser()
-      // })
     },
 
     initSearch(e) {
@@ -549,9 +531,6 @@ Component({
           }
         })
     },
-    prevent() {
-
-    },
 
     searchFocus() { // 触发搜索栏正在搜索状态
       this.setData({
@@ -559,8 +538,6 @@ Component({
       });
       this.setMask();
     },
-
-
 
     // isUnionId(url) {
     //   wx.showToast({
@@ -610,7 +587,6 @@ Component({
     //       })
     //     })
     // },
-
 
     setMask() {
       this.setData({
@@ -843,10 +819,6 @@ Component({
         psn: e.currentTarget.dataset.psn,
         category_id: categoryId
       })
-    },
-
-    onReachBottom() {
-      this.getMorePartListFromEpc()
     },
 
     getBrands() { //通过配件id获取品牌
@@ -1443,9 +1415,7 @@ Component({
 
         categoryId = bool ? this.data.categoryList[categoryIdx].children[index].mapped_id : ''
         categoryName = bool ? this.data.categoryList[categoryIdx].children[index].name : ''
-
       }
-
 
       this.setData({
         categoryList: this.data.categoryList,
@@ -1462,10 +1432,10 @@ Component({
         commonAttr: [],
       })
 
-      wx.setStorageSync('category', {
-        categoryId: categoryId,
-        categoryName: categoryName
-      })
+      // wx.setStorageSync('category', {
+      //   categoryId: categoryId,
+      //   categoryName: categoryName
+      // })
 
       setTimeout(function() {
         self.setData({

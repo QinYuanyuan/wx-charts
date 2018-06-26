@@ -1,9 +1,3 @@
-// import services from "../../utils/services.js";
-// import image from "../../utils/image.js";
-// import hepcSdk from "../../utils/hepc-sdk.js";
-// let app = getApp();
-// let systemInfo = app.globalData.systemInfo;
-
 let api = require('../../api/api.js');
 let s = require('../../api/services.js');
 let hepcSdk = require("../../api/hepc-sdk.js").default;
@@ -56,13 +50,6 @@ Component({
     noOEReplace: false, //无对应的品牌替换件
 
   },
-  // onLoad(options) {
-  //   this.setData({
-  //     id: options.id,
-  //     psn: options.psn,
-  //     category_id: options.category_id,
-  //   })
-  // },
   ready() {
     this.init();
     let windowHeight = wx.getSystemInfoSync().windowHeight;

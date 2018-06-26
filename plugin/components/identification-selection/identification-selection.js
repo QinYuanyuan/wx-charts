@@ -6,15 +6,11 @@ Component({
     }
   },
 
-  data: {
+  data: {},
+  ready() {},
 
-  },
-  ready() {
-    
-  },
   methods: {
     chooseModel(e) {
-      console.log(e);
       this.triggerEvent('chooseModel',{index: e.currentTarget.dataset.index})
     }
   }

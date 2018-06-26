@@ -1,11 +1,9 @@
 let s = require('../../api/services.js');
+let reVin = require('../../api/re.js').reVIN;
 let services = s.default;
-// const app = getApp();
-// const { screenWidth, screenHeight, system } = app.globalData.systemInfo;
-// const reVin = re.reVIN;
+
 
 Component({
-
   properties: {
     search: {
       type: Object,
@@ -30,11 +28,10 @@ Component({
   },
 
   methods: {
-
     toCameraFn() {
       this.triggerEvent('toCameraFn');
     },
-    
+
     // 触发搜索框搜索事件
     searchFn() {
       this.setData({
@@ -107,12 +104,11 @@ Component({
             if (this.data.search.query) {
               // 将搜索到的品牌过滤
               let filterResult = [];
-              r.result.forEach((item,index) => {
-                if(item.item_type !== 'part_brand'){
+              r.result.forEach((item, index) => {
+                if (item.item_type !== 'part_brand') {
                   filterResult.push(item);
                 }
               })
-
               this.setData({
                 'search.list.result': filterResult,
                 'search.list.status': true,
@@ -134,8 +130,7 @@ Component({
     },
 
     execSearch() {
-      let vin = this.data.search.query
-      console.log(vin)
+      let vin = this.data.search.query;
       if (/^[a-zA-Z0-9]{17}$/.test(vin)) {
         // 进入identification页面 然后通过vin查询车型信息，告诉该页面该入口的特征
         this.triggerEvent('toIdentificationFn', {
@@ -145,11 +140,11 @@ Component({
     },
 
     // 消除之前保存全局的车型信息的影响
-    clearGlobalModel() {
-      app.globalData.modelInfo = {};
-      app.globalData.modelId = '';
-      app.globalData.seriesId = '';
-    },
+    // clearGlobalModel() {
+    //   app.globalData.modelInfo = {};
+    //   app.globalData.modelId = '';
+    //   app.globalData.seriesId = '';
+    // },
 
     checkSearch(e) {
       const item = this.data.showResultList[e.currentTarget.dataset.index];
@@ -176,44 +171,25 @@ Component({
           break;
         case 'car_series': // 车系
           this.blurSearch();
-
-          if (this.data.pageSearchType === 'home') {
-            wx.navigateTo({
-              url: `/pages/part-purchase-list/part-purchase-list-with-parameter/part-purchase-list-with-parameter?series_id=${item.item_id}&series_name=${item.content}`
-            })
-          } else {
-            this.triggerEvent('getSearchPartList', {
-              series_id: item.item_id,
-              series_name: item.content,
-            })
-          }
+          this.triggerEvent('getSearchPartList', {
+            series_id: item.item_id,
+            series_name: item.content,
+          })
           break;
         case 'part_brand': // 配件品牌
           this.blurSearch();
-          if (this.data.pageSearchType === 'home') {
-            wx.navigateTo({
-              url: `/pages/part-purchase-list/part-purchase-list-with-parameter/part-purchase-list-with-parameter?brand_id=${item.item_id}&brand_name=${item.content}`
-            })
-          } else {
-            this.triggerEvent('getBrandListFn');
-            this.triggerEvent('getSearchPartList', {
-              brand_id: item.item_id,
-              brand_name: item.content,
-            })
-          }
+          this.triggerEvent('getBrandListFn');
+          this.triggerEvent('getSearchPartList', {
+            brand_id: item.item_id,
+            brand_name: item.content,
+          })
           break;
         case 'part_category_virtual': // 配件品类
           this.blurSearch();
-          if (this.data.pageSearchType === 'home') {
-            wx.navigateTo({
-              url: `/pages/part-purchase-list/part-purchase-list-with-parameter/part-purchase-list-with-parameter?category_id=${item.item_id}&category_name=${item.content}`
-            })
-          } else {
-            this.triggerEvent('getSearchPartList', {
-              category_id: String(item.item_id),
-              category_name: item.content,
-            })
-          }
+          this.triggerEvent('getSearchPartList', {
+            category_id: String(item.item_id),
+            category_name: item.content,
+          })
           break;
       }
     },
@@ -246,18 +222,5 @@ Component({
         }
       }
     },
-
-    goToCamera() {
-      if (this.data.pageSearchType === 'home') {
-        wx.navigateTo({
-          url: '/pages/camera/camera',
-        })
-      } else if (this.data.pageSearchType === 'part') {
-        wx.navigateTo({
-          url: '/pages/camera/camera?subPageType=partList',
-        })
-      }
-    }
-
   }
 })

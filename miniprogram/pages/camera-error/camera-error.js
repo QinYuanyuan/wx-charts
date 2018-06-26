@@ -6,7 +6,6 @@ Page({
   },
 
   onLoad: function (options) {
-    console.log('camera-error onload',options)
     this.setData({
       vin: options.vin,
       imageSrc: options.imageSrc
@@ -20,7 +19,6 @@ Page({
   },
 
   toIdentificationFn(e) {
-    console.log(e);
     wx.redirectTo({
       url: `/pages/identification/identification?vin=${e.detail.vin}&model=${e.detail.model}`,
     })

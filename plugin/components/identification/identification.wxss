@@ -195,45 +195,6 @@ page {
   color: #5c5c5c;
 }
 
-/* .identification__nav {
-  width: 100%;
-  height: 150rpx;
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  background-color: #fff;
-}
-
-.identification__nav__item {
-  width: 100%;
-  height: 150rpx;
-  display: flex;
-  align-content: center;
-  justify-content: space-between;
-  padding: 0 60rpx;
-  box-sizing: border-box;
-}
-
-.identification__nav__item view {
-  text-align: center;
-}
-
-.identification__nav__item image {
-  width: 54rpx;
-  height: 54rpx;
-  margin-top: 30rpx;
-}
-
-.identification__nav__item text {
-  display: block;
-  font-size: 28rpx;
-  color: #999;
-}
-
-.identification__nav__item--active text {
-  color: #313131;
-} */
-
 .identification__confirm {
   width: 630rpx;
   height: 80rpx;

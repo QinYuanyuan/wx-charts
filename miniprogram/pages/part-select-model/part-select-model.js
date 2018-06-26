@@ -9,14 +9,17 @@ Page({
     this.setData({
       modelInfo,
     })
-    console.log(this.data.modelInfo);
   },
 
 
   onShow: function () {
     
   },
-
+  toIdentification(e) {
+    wx.redirectTo({
+      url: `/pages/identification/identification?vin=${e.detail.vin}`,
+    })
+  },
   goBackFn(e) {
     let pages = getCurrentPages();
 
@@ -31,9 +34,6 @@ Page({
     });
     // 回到配件列表页面也得触发配件列表页面中的配件列表组件
     // 就是父组件出发子组件的事件
-    
-    // pages[pages.length - 2].getPartListFromEpc();
-    // pages[pages.length - 2].getModelByIdFn();
     wx.navigateBack({
       delta: 1,
     })

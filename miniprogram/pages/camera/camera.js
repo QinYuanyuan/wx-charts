@@ -15,7 +15,6 @@ Page({
   },
 
   toCameraErrorFn(e) {
-    console.log('toCameraErrorFn',e)
     wx.redirectTo({
       url: `/pages/camera-error/camera-error?vin=${e.detail.result.meta.vin}&imageSrc=${e.detail.result.meta.path}`,
     })

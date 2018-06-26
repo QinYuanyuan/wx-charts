@@ -1,4 +1,3 @@
-// pages/part-detail/part-detail.js
 Page({
 
   data: {
@@ -7,16 +6,9 @@ Page({
   },
 
   onLoad: function (options) {
-    console.log(options);
     this.setData({
       psn: options.psn,
       category_id: options.category_id,
     })
   },
-
-  onShow: function () {
-  
-  },
-
- 
 })

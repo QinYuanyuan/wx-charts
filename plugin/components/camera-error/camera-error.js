@@ -3,7 +3,6 @@ let s = require('../../api/services.js');
 let services = s.default;
 
 Component({
-
   properties: {
     vin: {
       type: String

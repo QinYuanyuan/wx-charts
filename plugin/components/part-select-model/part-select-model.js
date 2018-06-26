@@ -1,7 +1,3 @@
-// import services from "../../../utils/services.js";
-// let app = getApp();
-
-
 let api = require('../../api/api.js');
 let s = require('../../api/services.js');
 let services = s.default;
@@ -76,8 +72,6 @@ Component({
   },
   ready() {
     let modelInfo = this.data.modelInfo;
-    // console.log(1234567890,this.data.modelInfo);
-
     if (modelInfo && JSON.stringify(modelInfo) !== '{}') {
       if (modelInfo.model_id) {
         this.setData({
@@ -154,11 +148,7 @@ Component({
       delay: 0
     });
   },
-  onShow() {
-    this.setData({
-      scrollHeight: app.globalData.systemInfo.windowHeight,
-    })
-  },
+  
   methods: {
 
     // 选择搜索出的车系
@@ -456,23 +446,6 @@ Component({
           modelInfo,
           noSeriesId: false,
         })
-
-        // let pages = getCurrentPages();
-
-        // pages[pages.length - 2].setData({
-        //   modelId: modelId,
-        //   selectModelState: 1,
-        //   showModal: 0,
-        //   pageState: 'series',
-        //   noModelInfo: false,
-        //   modelInfo,
-        //   noSeriesId: false,
-        // });
-        // pages[pages.length - 2].getPartListFromEpc();
-        // pages[pages.length - 2].getModelByIdFn();
-        // wx.navigateBack({
-        //   delta: 1,
-        // })
       }
     },
 
@@ -495,7 +468,6 @@ Component({
       })
 
       let seriesId = this.data.vehicle.series_id;
-      // let pages = getCurrentPages();
       this.triggerEvent('goBackFn', {
         showSelectModel: false,
         modelId: '',
@@ -506,28 +478,12 @@ Component({
         noModelInfo: true,
         modelInfo: this.data.vehicle,
       })
-      // pages[pages.length - 2].setData({
-      //   showSelectModel: false,
-      //   modelId: '',
-      //   seriesId: seriesId,
-      //   selectModelState: 1,
-      //   showModal: 0,
-      //   pageState: 'series',
-      //   noModelInfo: true,
-      //   modelInfo: this.data.vehicle,
-      // });
-      // pages[pages.length - 2].getPartListFromEpc();
-      // wx.navigateBack({
-      //   delta: 1,
-      // })
     },
     handlerAlphaTap(e) {
-      console.log(11111111111,e)
       let { ap } = e.currentTarget.dataset;
       this.setData({
         alpha: ap.substr(0, 1)
       });
-      console.log(this.data.alpha);
     },
     toCameraFn() {
       wx.redirectTo({
@@ -550,9 +506,9 @@ Component({
 
     searchConfirmFn() {
       if (/^[a-zA-Z0-9]{17}$/.test(this.data.inputValue)) {
-        wx.navigateTo({
-          url: `/pages/identification/identification?pageType=part&subPageType=search&vin=${this.data.inputValue}`
-        });
+        this.triggerEvent('toIdentification',{
+          vin: this.data.inputValue
+        })
       } else {
         this.setData({
           showSeriesResult: true,
@@ -579,13 +535,13 @@ Component({
             this.setData({
               seriesResult
             })
-            let resultHeight = seriesResult.length * app.implementPx(95);
-            let scrollHeight = app.implementPx(1050);
-            if (resultHeight > scrollHeight) {
-              this.setData({
-                noMoreResult: true,
-              })
-            }
+            // let resultHeight = seriesResult.length * app.implementPx(95);
+            // let scrollHeight = app.implementPx(1050);
+            // if (resultHeight > scrollHeight) {
+            //   this.setData({
+            //     noMoreResult: true,
+            //   })
+            // }
           }
         }).catch((err) => {
           console.log(err);
