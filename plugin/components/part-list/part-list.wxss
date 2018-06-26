@@ -456,12 +456,13 @@ page {
 }
 .brand-content .alpha__item__bd .alpha__item__brand {
   display: inline-block;
-  background-color: #f7f7f7;
+  background-color: #fff;
   margin-right: 20rpx;
   padding: 10rpx 20rpx;
   border-radius: 8rpx;
   white-space: nowrap;
   margin-top: 20rpx;
+  border: 1rpx solid #aaa;
 }
 .brand-content .alpha__item__bd .active {
   border: 1rpx solid #d7000f;
@@ -786,7 +787,7 @@ view.sort__item:not(:last-child) {
   position: absolute;
   top: 30rpx;
   right: 0;
-  width: 1rpx;
+  width: 2rpx;
   height: 70rpx;
   background-color: #e5e5e5;
 }

@@ -22,6 +22,7 @@ Page({
       actualQuery: '',
     },
     categoryId: '',
+    categoryName: '',
   },
 
   onLoad: function(options) {
@@ -75,5 +76,12 @@ Page({
       url: `/pages/identification/identification?pageType=part-search&vin=${e.detail.vin}`
     });
   },
+
+  setCategoryFn(e) {
+    this.setData({
+      categoryId: e.detail.categoryId,
+      categoryName: e.detail.categoryName,
+    })
+  }
 
 })

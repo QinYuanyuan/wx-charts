@@ -10,10 +10,12 @@
   noSeriesId="{{noSeriesId}}"
   search="{{search}}"
   categoryId="{{categoryId}}"
+  categoryName="{{categoryName}}"
 
   bind:toDetailFn="toDetailFn"
   bind:toSelectModelFn="toSelectModelFn"
   bind:toCameraFn="toCameraFn"
   bind:toIdentificationFn="toIdentificationFn"
+  bind:setCategoryFn="setCategoryFn"
 
 />

@@ -32,6 +32,9 @@ Component({
     },
     categoryId: {
       type: String,
+    },
+    categoryName: {
+      type: String,
     }
   },
 
@@ -59,7 +62,7 @@ Component({
 
     index: -1,
     categoryParentId: '',
-    categoryName: '',
+    // categoryName: '',
     sortIndex: '0',
     importAttr: [], //显示的重要参数
     commonAttr: [], //筛选的参数
@@ -123,13 +126,10 @@ Component({
   },
 
   attached() {
-    // let category = wx.getStorageSync('category');
-    // this.setData({
-    //   categoryId: category.categoryId ? category.categoryId : '',
-    //   categoryName: category.categoryName ? category.categoryName : '',
-    //   allFilterSelected: category.categoryId && category.categoryId === '25,26,27,28' ? true : false,
-    //   allBrakeSelected: category.categoryId && category.categoryId === '18,19,3718,3719' ? true : false,
-    // })
+    this.setData({
+      allFilterSelected: this.data.categoryId && this.data.categoryId === '25,26,27,28' ? true : false,
+      allBrakeSelected: this.data.categoryId && this.data.categoryId === '18,19,3718,3719' ? true : false,
+    })
 
     // 当车型信息中没有model_id时，要通过车型信息的子品牌名称和车系名称获取该series_id，然后通过series_id来进行配件的筛选
     if (JSON.stringify(this.data.modelInfo) !== '{}' && !this.data.modelInfo.model_id) {
@@ -138,9 +138,9 @@ Component({
 
     this.getPartListFromEpc();
     this.getModelByIdFn();
-    // if (category.categoryId){
-    //   this.getPartAttrFromEpc();
-    // }
+    if (this.data.categoryId){
+      this.getPartAttrFromEpc();
+    }
   },
   ready() {
   },
@@ -1432,10 +1432,10 @@ Component({
         commonAttr: [],
       })
 
-      // wx.setStorageSync('category', {
-      //   categoryId: categoryId,
-      //   categoryName: categoryName
-      // })
+      this.triggerEvent('setCategoryFn',{
+        categoryId: categoryId,
+        categoryName: categoryName
+      })
 
       setTimeout(function() {
         self.setData({

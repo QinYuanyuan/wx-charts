@@ -53,7 +53,6 @@
       </view>
       </view>
       <view class='{{ popType === "cats" || categoryName? "active" : "" }}'>{{categoryName ? categoryName : '品类'}}</view>
-      <view class="border"></view>
     </view>
     <!--品牌  -->
     <!-- <view class="filter-item">
