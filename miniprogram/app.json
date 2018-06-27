@@ -14,5 +14,11 @@
       "version": "dev",
       "provider": "wx60090841b63b6250"
     }
+  },
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
   }
 }

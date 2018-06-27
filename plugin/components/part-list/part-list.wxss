@@ -352,21 +352,21 @@ page {
 .import-content {
   box-sizing: border-box;
   width: 750rpx;
-  height: 92%; 
-  position: fixed;
-  top: 290rpx;
+   height: 50%;  
+  position: absolute;
+  top: 170rpx;
   right: 0;
   z-index: 99;
-   padding-bottom: 100rpx;     
+  /* padding-bottom: 100rpx; */
   background-color: #fff;
-  overflow: auto;
+  overflow: scroll;
   border-top: 1rpx solid #e3e3e3;  
 }
 .import-content .import-list {
   padding-left: 20rpx;
 }
 .import-content .last-import-list{
-  margin-bottom: 100rpx;
+  margin-bottom: 20rpx;
 }
 .import-content .import-title {
   display: flex;
@@ -526,9 +526,9 @@ page {
 }
 
 .import-content .btn-area {
-  position: fixed;
-  bottom: 220rpx;   
-  right: 0;     
+  /* position: absolute;
+  bottom: 0;   
+  right: 0;      */
   width: 750rpx;
   line-height: 88rpx;
   height: 88rpx;
